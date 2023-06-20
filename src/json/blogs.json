@@ -1,0 +1,307 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "author": "John Doe",
+      "title": "Introduction to JavaScript",
+      "date": "2022-01-15",
+      "views": 500,
+      "likes": 50,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "JavaScript",
+        "Programming"
+      ],
+      "image": "https://source.unsplash.com/600x400/?javascript",
+      "isLiked": true
+    },
+    {
+      "id": 2,
+      "author": "Jane Smith",
+      "title": "CSS Tips and Tricks",
+      "date": "2022-02-10",
+      "views": 800,
+      "likes": 70,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "CSS",
+        "Web Design"
+      ],
+      "image": "https://source.unsplash.com/600x400/?css",
+      "isLiked": false
+    },
+    {
+      "id": 3,
+      "author": "Mark Johnson",
+      "title": "Getting Started with React",
+      "date": "2022-03-05",
+      "views": 1200,
+      "likes": 90,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "React",
+        "JavaScript",
+        "Web Development"
+      ],
+      "image": "https://source.unsplash.com/600x400/?react",
+      "isLiked": true
+    },
+    {
+      "id": 4,
+      "author": "Emily Brown",
+      "title": "Python for Beginners",
+      "date": "2022-04-20",
+      "views": 1000,
+      "likes": 80,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "Python",
+        "Programming"
+      ],
+      "image": "https://source.unsplash.com/600x400/?python",
+      "isLiked": false
+    },
+    {
+      "id": 5,
+      "author": "Michael Wilson",
+      "title": "Responsive Web Design",
+      "date": "2022-05-08",
+      "views": 700,
+      "likes": 60,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "Web Design",
+        "CSS"
+      ],
+      "image": "https://source.unsplash.com/600x400/?webdesign",
+      "isLiked": true
+    },
+    {
+      "id": 6,
+      "author": "Sarah Thompson",
+      "title": "Advanced JavaScript Techniques",
+      "date": "2022-06-25",
+      "views": 900,
+      "likes": 75,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "JavaScript",
+        "Programming"
+      ],
+      "image": "https://source.unsplash.com/600x400/?javascript",
+      "isLiked": false
+    },
+    {
+      "id": 7,
+      "author": "David Wilson",
+      "title": "Exploring Data Science",
+      "date": "2022-07-12",
+      "views": 1500,
+      "likes": 120,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "Data Science",
+        "Machine Learning"
+      ],
+      "image": "https://source.unsplash.com/600x400/?datascience",
+      "isLiked": true
+    },
+    {
+      "id": 8,
+      "author": "Jessica Adams",
+      "title": "Introduction to HTML",
+      "date": "2022-08-03",
+      "views": 600,
+      "likes": 45,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "HTML",
+        "Web Development"
+      ],
+      "image": "https://source.unsplash.com/600x400/?html",
+      "isLiked": false
+    },
+    {
+      "id": 9,
+      "author": "Ryan Johnson",
+      "title": "Mastering CSS Grid",
+      "date": "2022-09-18",
+      "views": 850,
+      "likes": 65,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "CSS",
+        "Web Design"
+      ],
+      "image": "https://source.unsplash.com/600x400/?css",
+      "isLiked": true
+    },
+    {
+      "id": 10,
+      "author": "Olivia Wilson",
+      "title": "JavaScript Frameworks Comparison",
+      "date": "2022-10-30",
+      "views": 950,
+      "likes": 85,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "JavaScript",
+        "Web Development"
+      ],
+      "image": "https://source.unsplash.com/600x400/?javascript",
+      "isLiked": false
+    },
+    {
+      "id": 11,
+      "author": "John Doe",
+      "title": "Advanced CSS Techniques",
+      "date": "2022-11-14",
+      "views": 750,
+      "likes": 55,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "CSS",
+        "Web Design"
+      ],
+      "image": "https://source.unsplash.com/600x400/?css",
+      "isLiked": true
+    },
+    {
+      "id": 12,
+      "author": "Jane Smith",
+      "title": "Introduction to Python",
+      "date": "2022-12-05",
+      "views": 1100,
+      "likes": 95,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "Python",
+        "Programming"
+      ],
+      "image": "https://source.unsplash.com/600x400/?python",
+      "isLiked": false
+    },
+    {
+      "id": 13,
+      "author": "Mark Johnson",
+      "title": "Front-end Web Development",
+      "date": "2023-01-20",
+      "views": 850,
+      "likes": 70,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "Web Development",
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "image": "https://source.unsplash.com/600x400/?webdevelopment",
+      "isLiked": true
+    },
+    {
+      "id": 14,
+      "author": "Emily Brown",
+      "title": "Database Design and Management",
+      "date": "2023-02-15",
+      "views": 950,
+      "likes": 80,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "Database",
+        "SQL"
+      ],
+      "image": "https://source.unsplash.com/600x400/?database",
+      "isLiked": false
+    },
+    {
+      "id": 15,
+      "author": "Michael Wilson",
+      "title": "Web Accessibility",
+      "date": "2023-03-10",
+      "views": 700,
+      "likes": 60,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "Web Development",
+        "Accessibility"
+      ],
+      "image": "https://source.unsplash.com/600x400/?web-accessibility",
+      "isLiked": true
+    },
+    {
+      "id": 16,
+      "author": "Sarah Thompson",
+      "title": "JavaScript Promises",
+      "date": "2023-04-25",
+      "views": 900,
+      "likes": 75,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "JavaScript",
+        "Asynchronous Programming"
+      ],
+      "image": "https://source.unsplash.com/600x400/?javascript",
+      "isLiked": false
+    },
+    {
+      "id": 17,
+      "author": "David Wilson",
+      "title": "Artificial Intelligence",
+      "date": "2023-05-12",
+      "views": 1200,
+      "likes": 100,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "AI",
+        "Machine Learning"
+      ],
+      "image": "https://source.unsplash.com/600x400/?artificialintelligence",
+      "isLiked": true
+    },
+    {
+      "id": 18,
+      "author": "Jessica Adams",
+      "title": "Introduction to CSS Flexbox",
+      "date": "2023-06-02",
+      "views": 600,
+      "likes": 45,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "CSS",
+        "Web Design"
+      ],
+      "image": "https://source.unsplash.com/600x400/?css",
+      "isLiked": false
+    },
+    {
+      "id": 19,
+      "author": "Ryan Johnson",
+      "title": "React Native Development",
+      "date": "2023-07-18",
+      "views": 850,
+      "likes": 65,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "React",
+        "Mobile Development"
+      ],
+      "image": "https://source.unsplash.com/600x400/?reactnative",
+      "isLiked": true
+    },
+    {
+      "id": 20,
+      "author": "Olivia Wilson",
+      "title": "Web Performance Optimization",
+      "date": "2023-08-30",
+      "views": 950,
+      "likes": 85,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maiores debitis.",
+      "tags": [
+        "Web Development",
+        "Performance"
+      ],
+      "image": "https://source.unsplash.com/600x400/?web-performance",
+      "isLiked": false
+    }
+  ]
+}

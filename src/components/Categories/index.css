@@ -1,0 +1,7 @@
+.categories-title {
+  @apply relative mb-3 inline-block pb-[2px] text-dark;
+}
+
+.categories-title::after {
+  @apply absolute left-0 top-full h-[2px] w-3/5 rounded-full bg-primary content-[""];
+}

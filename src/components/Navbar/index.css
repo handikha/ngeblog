@@ -1,0 +1,20 @@
+.nav-item {
+  @apply relative inline-block;
+}
+
+.nav-item::after {
+  @apply absolute left-0 top-full h-[3px]
+    w-3/4 origin-left scale-x-0 rounded-full bg-primary duration-150 content-[""];
+}
+
+.nav-item:hover::after {
+  @apply scale-x-100 bg-primary/40;
+}
+
+.nav-item.active::after {
+  @apply absolute left-0 top-full h-[3px] w-3/4 scale-x-100 rounded-full bg-primary content-[""];
+}
+
+nav {
+  @apply bg-light;
+}

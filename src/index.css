@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  input {
+    caret-color: #14b8a6;
+    caret-width: 2px;
+    @apply inline-block w-full rounded-full border-[1px] border-light bg-lightest px-5 py-2 font-poppins text-gray shadow-md outline-none focus:ring-[1px] focus:ring-primary/30;
+  }
+
+  label.placeholder {
+    @apply absolute bottom-2 left-5 origin-left cursor-text text-light-gray duration-200;
+  }
+
+  input:focus ~ label.placeholder,
+  input:not(:focus):valid ~ label.placeholder {
+    @apply -translate-x-1 -translate-y-5 bg-lighter px-1 text-xs text-primary;
+  }
+
+  input ~ div.message {
+    @apply absolute -right-[285px] top-6 transform rounded-md bg-light px-[6px] py-1 text-xs text-white shadow-md;
+  }
+
+  input ~ div.message::after {
+    @apply absolute -left-1 top-2 h-2 w-2 rotate-45  bg-light  content-[""];
+  }
+
+  html {
+    @apply scroll-smooth font-poppins duration-100;
+  }
+
+  h3 {
+    @apply text-xl font-semibold;
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    @apply w-2 rounded-full;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply bg-lighter;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-light-gray;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray;
+  }
+
+  /* Track */
+  .categories-container::-webkit-scrollbar-track {
+    @apply bg-light;
+  }
+}
+
+@layer components {
+  @import url("./components/Button/index.css");
+  @import url("./components/Categories/index.css");
+  @import url("./components/Popular/index.css");
+  @import url("./components/Search/index.css");
+  @import url("./components/Navbar/index.css");
+}

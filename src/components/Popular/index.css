@@ -1,0 +1,34 @@
+/* width */
+.popular-container::-webkit-scrollbar {
+  @apply rounded-full;
+  width: 5px;
+}
+
+/* Track */
+.popular-container::-webkit-scrollbar-track {
+  @apply bg-light;
+}
+
+/* Handle */
+.popular-container::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-gray;
+}
+
+/* Handle on hover */
+.popular-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/*.popular-container::after {
+  box-shadow: inset 0px -53px 21px -19px rgba(241, 245, 249, 0.75);
+  @apply absolute inset-0 content-[""];
+}
+ */
+
+.popular-title {
+  @apply relative mb-3 inline-block pb-[2px] text-xl font-semibold text-dark;
+}
+
+.popular-title::after {
+  @apply absolute left-0 top-full h-[2px] w-3/5 rounded-full bg-primary content-[""];
+}
