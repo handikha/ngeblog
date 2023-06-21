@@ -12,6 +12,7 @@ import {
   forgotPassword,
   changeUsername,
   changePhoneNumber,
+  changePassword,
 } from "./slices";
 
 // @import schema validation
@@ -26,6 +27,7 @@ const INITIAL_STATE = {
   isResetPasswordLoading: false,
   isChangeUsernameLoading: false,
   isChangePhoneNumberLoading: false,
+  isChangePasswordLoading: false,
   id: null,
   username: "",
   email: "",
@@ -130,6 +132,18 @@ const authSlice = createSlice({
       })
       .addCase(changePhoneNumber.rejected, (state, action) => {
         state.isChangePhoneNumberLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(changePassword.pending, (state, action) => {
+        state.isChangePasswordLoading = true;
+      })
+      .addCase(changePassword.fulfilled, (state, action) => {
+        state.success = action.payload;
+        state.isChangePasswordLoading = false;
+      })
+      .addCase(changePassword.rejected, (state, action) => {
+        state.isChangePasswordLoading = false;
         state.error = action.payload;
       })
 

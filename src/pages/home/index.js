@@ -13,6 +13,8 @@ import HomeLoading from "./home.loading";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import RenderCards from "../../components/Card";
+import Slider from "react-slick";
+import Carousel from "../../components/Carousel";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -117,10 +119,10 @@ export default function Home() {
 
       {/* CARD CONTAINER */}
       <div className="grid h-fit w-full gap-y-10 sm:grid-cols-2 sm:gap-6 lg:col-span-2">
-        <div className="col-span-full h-96 rounded-xl bg-red-500">
-          
-          <div className="w-full h-full"></div>
-        </div>
+        {/* CAROUSEL */}
+        {/* <div className="col-span-full h-96 rounded-xl bg-lighter">
+          <Carousel blogs={popularBlogs} interval="1000" />
+        </div> */}
         {params.category ? (
           <h5 className="col-span-full font-medium text-dark">
             <Button

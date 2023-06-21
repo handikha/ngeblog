@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  changePassword,
   changePhoneNumber,
   changeUsername,
   keepLogin,
@@ -30,13 +31,6 @@ export default function Profile() {
   const newUsernameRef = useRef(null);
   const newPhoneNumberRef = useRef(null);
 
-  const refTitle = useRef(null);
-  const refContent = useRef(null);
-  const refCountry = useRef(null);
-  const refCategoryId = useRef(null);
-  const refUrl = useRef(null);
-  const refKeywords = useRef(null);
-
   const newUsernameValue = newUsernameRef.current?.value;
   const newPhoneNumberValue = newPhoneNumberRef.current?.value;
 
@@ -48,6 +42,7 @@ export default function Profile() {
     isKeepLoginLoading,
     isChangeUsernameLoading,
     isChangePhoneNumberLoading,
+    isChangePasswordLoading,
     articles,
     isVerified,
     error,
@@ -58,6 +53,7 @@ export default function Profile() {
       isKeepLoginLoading: state.auth.isKeepLoginLoading,
       isChangeUsernameLoading: state.auth.isChangeUsernameLoading,
       isChangePhoneNumberLoading: state.auth.isChangePhoneNumberLoading,
+      isChangePasswordLoading: state.auth.isChangePasswordLoading,
       articles: state.blogs.articles,
       isLoading: state.blogs.isLoading,
       isVerified: state.auth.isVerified,
@@ -117,7 +113,6 @@ export default function Profile() {
   const handleShowContent = (content) => {
     setShowContent(content);
   };
-  console.log(showContent);
 
   // HANDLE CHANGE USERNAME
   const onButtonChangeUsername = () => {
@@ -141,6 +136,22 @@ export default function Profile() {
     );
 
     setIsEmailSent(true);
+  };
+
+  const handleChangePasswordButton = () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to change the password?"
+    );
+
+    if (confirmed) {
+      dispatch(
+        changePassword({
+          currentPassword: passwordRef.current.value,
+          password: newPasswordRef.current.value,
+          confirmPassword: reNewPasswordRef.current.value,
+        })
+      );
+    }
   };
 
   useEffect(() => {
@@ -189,8 +200,6 @@ export default function Profile() {
               <div>Content Here</div>
             </>
           ) : null}
-
-        
         </div>
       </div>
 
@@ -322,11 +331,8 @@ export default function Profile() {
                 onClick={handleCloseModal}
               />
               <Button
-                type="submit"
-                // onClick={() => {
-                //   navigate("/login");
-                //   handleCloseModal();
-                // }}
+                type="button"
+                onClick={handleChangePasswordButton}
                 title="Change Password"
                 isButton
                 isPrimary
