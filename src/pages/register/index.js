@@ -285,8 +285,6 @@ export default function Register() {
                   isDisabled={isRegisterLoading || !values}
                   isLoading={isRegisterLoading}
                 />
-
-                {errors}
               </form>
             )}
           </Formik>

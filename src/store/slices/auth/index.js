@@ -83,6 +83,10 @@ const authSlice = createSlice({
       .addCase(register.pending, (state, action) => {
         state.isRegisterLoading = true;
       })
+      .addCase(register.rejected, (state, action) => {
+        state.isRegisterLoading = false;
+        state.error = action.payload;
+      })
 
       .addCase(verifyAccount.pending, (state, action) => {
         state.isRegisterLoading = true;

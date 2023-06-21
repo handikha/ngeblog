@@ -49,7 +49,7 @@ export const logout = createAsyncThunk(
       return {};
     } catch (error) {
       // console.error(error);
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.response ? error.response.data.err : error);
     }
   }
 );
