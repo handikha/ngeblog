@@ -17,6 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../../components/spinner";
 import ModalChangeUserName from "./modal.change.username";
 import ModalChangePhoneNumber from "./modal.change.phonenumber";
+import ComponentProfile from "./component.profile";
 
 export default function Profile() {
   const location = useLocation();
@@ -28,6 +29,13 @@ export default function Profile() {
   const reNewPasswordRef = useRef(null);
   const newUsernameRef = useRef(null);
   const newPhoneNumberRef = useRef(null);
+
+  const refTitle = useRef(null);
+  const refContent = useRef(null);
+  const refCountry = useRef(null);
+  const refCategoryId = useRef(null);
+  const refUrl = useRef(null);
+  const refKeywords = useRef(null);
 
   const newUsernameValue = newUsernameRef.current?.value;
   const newPhoneNumberValue = newPhoneNumberRef.current?.value;
@@ -104,11 +112,12 @@ export default function Profile() {
     }
   };
 
-  // HANDLE SHOW LIKED ARTICLES
-  const [showLikedArticles, setShowLikedArticles] = useState(false);
-  const handleShowLikedArticle = (isShowed) => {
-    setShowLikedArticles(isShowed);
+  // HANDLE SHOW CONTENT
+  const [showContent, setShowContent] = useState(null);
+  const handleShowContent = (content) => {
+    setShowContent(content);
   };
+  console.log(showContent);
 
   // HANDLE CHANGE USERNAME
   const onButtonChangeUsername = () => {
@@ -156,117 +165,32 @@ export default function Profile() {
   return (
     <div className="container px-4 py-24 text-dark">
       <div className="grid grid-cols-3 gap-x-10">
-        <div className=" col-span-3 flex h-fit flex-col items-center rounded-xl bg-lighter p-8 shadow-md lg:col-span-1">
+        <div className=" flex h-fit flex-col items-center rounded-xl bg-lighter p-8 shadow-md lg:col-span-1">
           <h3>{profile.username}</h3>
 
-          <div className=" mt-4 aspect-square w-3/4 overflow-hidden rounded-full ">
-            <img
-              src={process.env.REACT_APP_IMAGE_URL + profile.imgProfile}
-              // src="https://source.unsplash.com/600x600?cat"
-              alt=""
-              className="h-full w-full rounded-full object-cover"
-            />
-          </div>
-          <div className=" mt-4 flex w-full flex-col items-start  gap-4 ">
-            <Button
-              type="button"
-              title="Create New Post"
-              // onClick={handleShowModal}
-              isButton
-              isPrimary
-              className="w-full"
-            />
-
-            <Button
-              type="button"
-              title="My Articles"
-              onClick={() => handleShowLikedArticle(false)}
-              className={`duration-200  ${
-                !showLikedArticles
-                  ? " text-primary"
-                  : "hover:ml-2 hover:text-primary"
-              }`}
-            />
-
-            <Button
-              type="button"
-              title="Liked Articles"
-              onClick={() => handleShowLikedArticle(true)}
-              className={`duration-200  ${
-                showLikedArticles
-                  ? " text-primary"
-                  : "hover:ml-2 hover:text-primary"
-              }`}
-            />
-
-            <Button
-              type="button"
-              title="Change Profile Picture"
-              onClick={() => navigate("/profile/upload-image")}
-              className="duration-200 hover:ml-2 hover:text-primary"
-            />
-
-            <Button
-              type="button"
-              title="Change Username"
-              onClick={() =>
-                handleOpenModal({
-                  display: true,
-                  type: "changeUsername",
-                })
-              }
-              className="duration-200 hover:ml-2 hover:text-primary"
-            />
-
-            <Button
-              type="button"
-              title="Change Password"
-              onClick={() =>
-                handleOpenModal({
-                  display: true,
-                  type: "changePassword",
-                })
-              }
-              className="duration-200 hover:ml-2 hover:text-primary "
-            />
-
-            <Button
-              type="button"
-              title="Change Phone Number"
-              onClick={() =>
-                handleOpenModal({
-                  display: true,
-                  type: "changePhoneNumber",
-                })
-              }
-              className="duration-200 hover:ml-2 hover:text-primary "
-            />
-
-            <Button
-              type="button"
-              title="Change Email"
-              onClick={() =>
-                handleOpenModal({
-                  display: true,
-                  type: "changeEmail",
-                })
-              }
-              className="duration-200 hover:ml-2 hover:text-primary "
-            />
-          </div>
+          <ComponentProfile
+            handleOpenModal={handleOpenModal}
+            handleShowContent={handleShowContent}
+            profile={profile}
+            showContent={showContent}
+          />
         </div>
         <div className="mt-8 grid h-fit w-full gap-y-10 sm:grid-cols-2 sm:gap-6 lg:col-span-2 lg:mt-0">
-          {showLikedArticles ? (
+          {showContent === "likedArticles" && (
             <>
               <h3 className="col-span-2">Liked Articles</h3>
               <RenderCards articles={articles} />
             </>
-          ) : (
+          )}
+
+          {showContent === "myArticles" || showContent === null ? (
             <>
               <h3 className="col-span-2">Your Articles</h3>
               <div>Content Here</div>
             </>
-          )}
+          ) : null}
+
+        
         </div>
       </div>
 
@@ -319,57 +243,6 @@ export default function Profile() {
           error={error}
           success={success}
         />
-        // <Modal showModal={true}>
-        //   <p>Change Phone Number</p>
-        //   {isChangePhoneNumberLoading ? (
-        //     <div className="flex w-full items-center justify-center py-4">
-        //       <Spinner />
-        //     </div>
-        //   ) : (
-        //     <form action="" className="w-full pt-4 text-sm">
-        //       {/* CURRENT PASSWORD */}
-        //       {isEmailSent ? (
-        //         <div className="flex w-full flex-col items-center justify-center">
-        //           <HiCheckCircle className="text-5xl text-primary" />
-        //           <p className="mt-2 text-base">Email sent!</p>
-        //         </div>
-        //       ) : (
-        //         <div className="relative">
-        //           <input
-        //             ref={newPhoneNumberRef}
-        //             defaultValue={isEmailSent ? "" : profile.phone}
-        //             required
-        //             type="text"
-        //             className="mt-4 bg-lighter"
-        //             id="password"
-        //           />
-        //           <label htmlFor="password" className="placeholder">
-        //             Change Phone Number
-        //           </label>
-        //         </div>
-        //       )}
-        //       <div className="mt-6 flex justify-end gap-4">
-        //         <Button
-        //           title="Close"
-        //           className="font-medium hover:text-primary"
-        //           onClick={handleCloseModal}
-        //           isButton
-        //         />
-        //         {!isEmailSent && (
-        //           <Button
-        //             type="button"
-        //             onClick={onButtonChangePhoneNumber}
-        //             title="Change Phone Number"
-        //             isButton
-        //             isPrimary
-        //             isDisabled={isChangePhoneNumberLoading}
-        //             isLoading={isChangePhoneNumberLoading}
-        //           />
-        //         )}
-        //       </div>
-        //     </form>
-        //   )}
-        // </Modal>
       )}
 
       {/* CHANGE PASSWORD MODAL */}

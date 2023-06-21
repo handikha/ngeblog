@@ -89,6 +89,10 @@ const authSlice = createSlice({
         state.isRegisterLoading = false;
         state.isVerified = true;
       })
+      .addCase(verifyAccount.rejected, (state, action) => {
+        state.isRegisterLoading = false;
+        state.error = action.payload;
+      })
 
       .addCase(forgotPassword.pending, (state, action) => {
         state.isForgotPasswordLoading = true;
@@ -121,6 +125,7 @@ const authSlice = createSlice({
         state.isChangePhoneNumberLoading = true;
       })
       .addCase(changePhoneNumber.fulfilled, (state, action) => {
+        state.success = action.payload;
         state.isChangePhoneNumberLoading = false;
       })
       .addCase(changePhoneNumber.rejected, (state, action) => {

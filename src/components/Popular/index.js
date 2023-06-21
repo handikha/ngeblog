@@ -19,7 +19,7 @@ export default function Popular({ data }) {
                 className=" block font-semibold hover:text-primary "
                 title={blog.title}
                 type="link"
-                path="#"
+                path={`/popular-article/${blog.id}`}
               />
               <div className=" flex items-center gap-x-2 text-sm italic text-light-gray">
                 {/* <a

@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import Button from "../Button";
 import "./index.css";
-import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../../store/slices/categories/slices";
 
 export default React.memo(function Categories({ data }) {
   return (

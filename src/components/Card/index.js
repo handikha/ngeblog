@@ -4,6 +4,7 @@ import formatNumber from "../../utils/formatNumber";
 import Button from "../Button";
 import { HiOutlineBookmark } from "react-icons/hi2";
 import formatDate from "../../utils/formatDate";
+import { useNavigate } from "react-router-dom";
 
 function Card({
   id,
@@ -15,6 +16,7 @@ function Card({
   image,
   onButtonLike,
 }) {
+  const navigate = useNavigate();
   return (
     <div className="group  min-h-max w-full overflow-hidden rounded-lg font-poppins shadow-lg">
       <div className="aspect-[2/1] w-full overflow-hidden sm:aspect-[5/3]">
@@ -28,8 +30,8 @@ function Card({
       <div className="flex h-48 flex-col justify-start bg-lightest p-4">
         <div className="">
           <a
-            href={`/article/${id}`}
-            className="text-xl font-semibold text-dark duration-150 hover:text-primary"
+            onClick={() => navigate(`/article/${id}`)}
+            className="cursor-pointer text-xl font-semibold text-dark duration-150 hover:text-primary"
           >
             {title}
           </a>

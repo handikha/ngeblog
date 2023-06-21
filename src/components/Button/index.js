@@ -12,7 +12,7 @@ export default function Button(props) {
 
   props.isSecondary &&
     className.push(
-      "text-primary border border-primary bg-transparent hover:bg-primary hover:text-light"
+      "text-primary border border-primary bg-transparent hover:bg-primary hover:text-white"
     );
 
   props.isDisabled && className.push("cursor-default");

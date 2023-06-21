@@ -143,7 +143,9 @@ export default function Login() {
                   Forgot Password?
                 </p>
                 {error && (
-                  <div className="mt-2 pl-5 text-xs text-red-500">{error}</div>
+                  <div className="mt-2 pl-5 text-xs text-red-500">
+                    {error}
+                  </div>
                 )}
 
                 <Button

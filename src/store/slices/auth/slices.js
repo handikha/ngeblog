@@ -22,7 +22,7 @@ export const login = createAsyncThunk(
       // return rejectWithValue("Incorrect username or password");
 
       // menjadi action.payload yang ada di error handler reducer index.js
-      return rejectWithValue(error.response ? error?.response?.data : error);
+      return rejectWithValue(error.response ? error.response?.data.err : error);
     }
   }
 );
@@ -35,7 +35,7 @@ export const keepLogin = createAsyncThunk(
 
       return data;
     } catch (error) {
-      console.error(error.response ? error.response.data : error);
+      console.error(error.response ? error.response?.data.err : error);
       // return rejectWithValue(error.response ? error.response.data : error);
     }
   }
@@ -113,7 +113,7 @@ export const changePhoneNumber = createAsyncThunk(
     try {
       const { data } = await api.patch("/auth/changePhone", payload);
       // Toast.success(data.message);
-      return;
+      return data.message;
     } catch (error) {
       Toast.error(error.response ? error.response.data : error);
       return rejectWithValue(error.response ? error.response.data : error);
@@ -129,7 +129,9 @@ export const verifyAccount = createAsyncThunk(
 
       return;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(
+        error.response ? error.response?.data?.err : error
+      );
     }
   }
 );
@@ -142,9 +144,9 @@ export const updateImageProfile = createAsyncThunk(
       Toast.success("Image profile updated!");
       return data?.imgProfile;
     } catch (error) {
-      Toast.success("update image profile failed!");
+      Toast.error(error.response ? error.response?.data : error);
 
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.response ? error.response?.data : error);
     }
   }
 );

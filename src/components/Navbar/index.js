@@ -20,8 +20,12 @@ export default function Navbar() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const { id, imgProfile } = useSelector((state) => {
-    return { id: state.auth?.id, imgProfile: state.auth?.imgProfile };
+  const { id, imgProfile, username } = useSelector((state) => {
+    return {
+      id: state.auth?.id,
+      imgProfile: state.auth?.imgProfile,
+      username: state.auth.username,
+    };
   });
 
   const getNavLinkClass = (path) => {
@@ -89,6 +93,18 @@ export default function Navbar() {
                   onClick={handleProfileButton}
                 >
                   <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-lighter">
+                    {imgProfile === null ? (
+                      <div className="flex aspect-square h-fit items-center justify-center bg-primary text-xl text-white">
+                        {username.charAt(0).toUpperCase()}
+                      </div>
+                    ) : (
+                      <img
+                        src={process.env.REACT_APP_IMAGE_URL + imgProfile}
+                        // src="https://source.unsplash.com/600x600?cat"
+                        alt=""
+                        className="h-full w-full rounded-full object-cover"
+                      />
+                    )}
                     <img
                       src={process.env.REACT_APP_IMAGE_URL + imgProfile}
                       // src="https://source.unsplash.com/50x50?cat"

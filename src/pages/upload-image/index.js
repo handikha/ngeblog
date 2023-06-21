@@ -17,6 +17,10 @@ export default function FormUploadImage() {
 
   const onDrop = (acceptedFiles) => {
     const selectedFile = acceptedFiles[0];
+    if (selectedFile.size > 1000000) {
+      alert("file too large. Max 1 MB");
+      return;
+    }
     setFile(selectedFile);
 
     // show prev image
@@ -46,6 +50,7 @@ export default function FormUploadImage() {
     dispatch(updateImageProfile(formData));
     setFile(null);
     setPreviewImage(null);
+    // window.location.reload();
   };
 
   return (
@@ -93,6 +98,7 @@ export default function FormUploadImage() {
           <p className="text-md mb-2 mt-2 text-center font-normal text-slate-400">
             Or
           </p>
+
           <Button
             onClick={open}
             title="Choose a file"

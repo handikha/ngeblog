@@ -19,25 +19,23 @@ export default function Home() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { categories } = useSelector((state) => {
-    return { categories: state.categories.data };
-  });
-
-  const { loading, currentPage, totalPage, articles } = useSelector((state) => {
+  const {
+    isArticlesLoading,
+    currentPage,
+    totalPage,
+    articles,
+    categories,
+    popularBlogs,
+    id,
+    isVerified,
+  } = useSelector((state) => {
     return {
-      loading: state.blogs.isLoading,
+      isArticlesLoading: state.blogs.isArticlesLoading,
       articles: state.blogs.articles,
       currentPage: state.blogs.currentPage,
       totalPage: state.blogs.totalPage,
-    };
-  });
-
-  const { popularBlogs } = useSelector((state) => {
-    return { popularBlogs: state.popularBlogs.data };
-  });
-
-  const { id, isVerified } = useSelector((state) => {
-    return {
+      categories: state.categories.data,
+      popularBlogs: state.popularBlogs.data,
       id: state.auth.id,
       isVerified: state.auth.isVerified,
     };
@@ -82,6 +80,11 @@ export default function Home() {
     : tempBlogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const handlePagination = (type) => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
     if (typeof type === "number") {
       dispatch(
         getArticles({
@@ -102,7 +105,7 @@ export default function Home() {
     );
   };
 
-  if (loading) return <HomeLoading />;
+  if (isArticlesLoading) return <HomeLoading />;
 
   return (
     <div className="container grid grid-cols-1 gap-y-10 px-4 py-24 lg:grid-cols-3 lg:gap-x-10">
@@ -114,6 +117,10 @@ export default function Home() {
 
       {/* CARD CONTAINER */}
       <div className="grid h-fit w-full gap-y-10 sm:grid-cols-2 sm:gap-6 lg:col-span-2">
+        <div className="col-span-full h-96 rounded-xl bg-red-500">
+          
+          <div className="w-full h-full"></div>
+        </div>
         {params.category ? (
           <h5 className="col-span-full font-medium text-dark">
             <Button

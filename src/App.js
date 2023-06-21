@@ -25,16 +25,12 @@ import ProtectedRoute from "./protected.routes";
 import "./index.css";
 import ForgotPassword from "./pages/forgot-password";
 import FormUploadImage from "./pages/upload-image";
+import PopularArticle from "./pages/popular-article";
+import CreateNewArticle from "./pages/create-new-article";
 
 export default function App() {
   const location = useLocation();
   const dispatch = useDispatch();
-
-  const { isKeepLoginLoading } = useSelector((state) => {
-    return {
-      isKeepLoginLoading: state.auth?.isKeepLoginLoading,
-    };
-  });
 
   useEffect(() => {
     dispatch(keepLogin());
@@ -75,6 +71,9 @@ export default function App() {
 
           <Route path="/category/:category" element={<Home />} />
           <Route path="/article/:id" element={<Article />} />
+          <Route path="/popular-article/:id" element={<PopularArticle />} />
+
+          <Route path="/create-new-article" element={<CreateNewArticle />} />
 
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />

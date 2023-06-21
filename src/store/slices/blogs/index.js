@@ -8,7 +8,8 @@ const INITIAL_STATE = {
   articles: [],
   totalPage: 1,
   currentPage: 1,
-  isLoading: false,
+  isArticlesLoading: false,
+  isLikeArticleLoading: false,
 };
 
 const blogsSlice = createSlice({
@@ -17,11 +18,11 @@ const blogsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getArticles.pending, (state, action) => {
-        state.isLoading = true;
+        state.isArticlesLoading = true;
       })
       .addCase(getArticles.fulfilled, (state, action) => {
         state = Object.assign(state, {
-          isLoading: false,
+          isArticlesLoading: false,
           articles: action.payload?.result,
           totalPage: action.payload?.page,
           currentPage: action.payload?.blogPage,
@@ -29,22 +30,22 @@ const blogsSlice = createSlice({
       })
 
       .addCase(getArticles.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isArticlesLoading = false;
       })
       .addCase(getLikedArticles.pending, (state, action) => {
-        state.isLoading = true;
+        state.isArticlesLoading = true;
       })
       .addCase(getLikedArticles.fulfilled, (state, action) => {
         state = Object.assign(state, {
-          isLoading: false,
+          isLikeArticleLoading: false,
           articles: action.payload?.result,
         });
       })
       .addCase(getLikedArticles.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLikeArticleLoading = false;
       })
       .addMatcher(isErrorOccured, (state, action) => {
-        state.isLoading = false;
+        state.isLikeArticleLoading = false;
         console.error(action.payload);
       });
   },

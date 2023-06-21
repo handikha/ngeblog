@@ -13,29 +13,25 @@ import { getPopularBlogs } from "../../store/slices/popular/slices";
 import Spinner from "../../components/spinner";
 import HomeLoading from "../home/home.loading";
 
-export default function Article() {
+export default function PopularArticle() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { articles, currentPage, totalPage, categories, popularBlogs } =
-    useSelector((state) => {
-      return {
-        articles: state.blogs.articles,
-        currentPage: state.blogs.currentPage,
-        totalPage: state.blogs.totalPage,
-        categories: state.categories.data,
-        popularBlogs: state.popularBlogs.data,
-      };
-    });
+  const { popularBlogs, categories } = useSelector((state) => {
+    return {
+      popularBlogs: state.popularBlogs.data,
+      categories: state.categories.data,
+    };
+  });
 
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getPopularBlogs());
-    dispatch(getArticles({ id_cat: 3, page: currentPage, sort: "ASC" }));
   }, []);
   // console.log(articles);
 
-  const article = articles && articles.find((article) => article.id === +id);
+  const article =
+    popularBlogs && popularBlogs.find((popularBlog) => popularBlog.id === +id);
   console.log(article);
 
   if (!article) return <HomeLoading />;
@@ -56,7 +52,7 @@ export default function Article() {
           <div className="text-sm italic text-gray">
             <span>
               Written by{" "}
-              <span className="font-medium">{article.User.username}</span>{" "}
+              {/* <span className="font-medium">{article.User.username}</span>{" "} */}
             </span>
             <span className="mx-2">&#183;</span>
             <span>{formatDate(article.createdAt)}</span>
