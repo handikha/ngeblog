@@ -31,7 +31,7 @@ export default function Article() {
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getPopularBlogs());
-    dispatch(getArticles({ id_cat: 3, page: currentPage, sort: "ASC" }));
+    dispatch(getArticles({ id_cat: "", page: 1, sort: "DESC" }));
   }, []);
   // console.log(articles);
 
@@ -69,7 +69,7 @@ export default function Article() {
       </div>
       <div className="grid h-fit grid-cols-1 gap-10">
         {/* <Search /> */}
-        <Categories data={categories} />
+        {/* <Categories data={categories} /> */}
         <Popular data={popularBlogs} />
       </div>
     </div>
