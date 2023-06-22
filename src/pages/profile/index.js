@@ -164,6 +164,10 @@ export default function Profile() {
         }
         handleCloseModal();
       }
+
+      if (event.key === "Enter") {
+        event.preventDefault();
+      }
     };
 
     document.addEventListener("keydown", handleKeyDownEvent);
@@ -258,7 +262,7 @@ export default function Profile() {
       {showModal.type === "changePassword" && isVerified && (
         <Modal showModal={true}>
           Change Password
-          <form action="" className="w-full text-sm">
+          <form className="w-full text-sm">
             {/* CURRENT PASSWORD */}
             <div className="relative">
               <input

@@ -22,7 +22,7 @@ export default function ModalChangePhoneNumber({
       <p>Change Phone Number</p>
 
       {currentStep === 1 && (
-        <form action="" className="w-full pt-4 text-sm">
+        <form className="w-full pt-4 text-sm">
           <div className="relative">
             <input
               ref={refPhoneNumber}
