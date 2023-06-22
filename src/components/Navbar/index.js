@@ -35,6 +35,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const [profileClicked, setProfileClicked] = useState(false);
+
   const handleProfileButton = (event) => {
     event?.stopPropagation();
     setProfileClicked(!profileClicked);
@@ -141,6 +142,14 @@ export default function Navbar() {
                       : "invisible scale-0 opacity-0"
                   }`}
                 >
+                  <Button
+                    title="Create New Article"
+                    type="link"
+                    path="/create-new-article"
+                    className="block py-3 duration-200 hover:pl-2 hover:text-primary"
+                    onClick={handleProfileButton}
+                  />
+
                   <Button
                     title="Profile"
                     type="link"

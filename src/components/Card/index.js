@@ -15,6 +15,7 @@ function Card({
   category,
   image,
   onButtonLike,
+  onButtonDelete,
 }) {
   const navigate = useNavigate();
   return (
@@ -49,38 +50,36 @@ function Card({
           <p className="line-clamp-2">{content}</p>
         </div>
 
-        <div className="mt-6 flex items-center gap-x-2 text-sm italic text-light-gray">
-          <a
-            href="/user/profile/"
-            className="flex items-center hover:text-primary"
-          >
-            <div className="mr-2 h-6 w-6 overflow-auto rounded-full bg-primary">
-              <img
-                src="https://source.unsplash.com/50x50?potrait"
-                alt=""
-                srcSet=""
-                className="w-full-h-full object-cover"
-              />
-            </div>
-            <span className="text-xs">{author}</span>
-          </a>
+        <div className="mt-6 flex items-center gap-x-2 text-sm  text-light-gray">
+          <span className="text-xs">
+            Written by{" "}
+            <span className="cursor-pointer font-medium italic hover:text-primary">
+              {author}
+            </span>
+          </span>
+
           <span className="">&#183;</span>
           <span className="text-xs">{date}</span>
         </div>
       </div>
 
       <div className="lg:pt4 flex gap-x-6 bg-lightest p-4 text-gray sm:pt-8">
-        <div className="flex items-center gap-x-1">
+        <div className="flex w-full items-center justify-between gap-x-1">
           <span
             className="text-lg text-red-400 duration-100 hover:cursor-pointer active:scale-125"
             onClick={onButtonLike}
           >
-            {/* {liked ? <FaHeart /> : <FaRegHeart />} */}
             <FaRegHeart />
           </span>
-          <span className="w-8 select-none text-light-gray">
-            {/* {formatNumber(likesCount)} */}
-          </span>
+
+          {author === "handikha2" && (
+            <span
+              onClick={onButtonDelete}
+              className="cursor-pointer select-none rounded-md bg-red-400 p-2 text-white hover:bg-red-500"
+            >
+              DELETE
+            </span>
+          )}
         </div>
         {/* <div className="flex items-center gap-x-1 text-light-gray">
           <span className="text-lg">
@@ -96,6 +95,7 @@ function Card({
 export default function RenderCards({
   articles = [],
   onButtonLike = (id) => {},
+  onButtonDelete = (id) => {},
 }) {
   return articles.map((article, index) => (
     <Card
@@ -108,6 +108,7 @@ export default function RenderCards({
       content={article.content}
       category={article.Category.name}
       onButtonLike={() => onButtonLike(article.id)}
+      onButtonDelete={() => onButtonDelete(article.id)}
     />
   ));
 }

@@ -8,17 +8,14 @@ import {
 } from "../../store/slices/auth/slices";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
-import {
-  HiCheckCircle,
-  HiOutlineEye,
-  HiOutlineEyeSlash,
-} from "react-icons/hi2";
+import { HiOutlineEye, HiOutlineEyeSlash } from "react-icons/hi2";
 import RenderCards from "../../components/Card";
 import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../../components/spinner";
 import ModalChangeUserName from "./modal.change.username";
 import ModalChangePhoneNumber from "./modal.change.phonenumber";
 import ComponentProfile from "./component.profile";
+import { deleteArticle } from "../../store/slices/blogs/slices";
 
 export default function Profile() {
   const location = useLocation();
@@ -47,6 +44,7 @@ export default function Profile() {
     isVerified,
     error,
     success,
+    myArticles,
   } = useSelector((state) => {
     return {
       profile: state.auth,
@@ -55,6 +53,7 @@ export default function Profile() {
       isChangePhoneNumberLoading: state.auth.isChangePhoneNumberLoading,
       isChangePasswordLoading: state.auth.isChangePasswordLoading,
       articles: state.blogs.articles,
+      myArticles: state.blogs.myArticles,
       isLoading: state.blogs.isLoading,
       isVerified: state.auth.isVerified,
       error: state.auth.error,
@@ -154,6 +153,14 @@ export default function Profile() {
     }
   };
 
+  // HANDLE DELETE BUTTON
+  const onButtonDelete = (id) => {
+    const confirm = window.confirm("Are you sure want to delete this article?");
+    if (confirm) {
+      dispatch(deleteArticle(id));
+    }
+  };
+
   useEffect(() => {
     dispatch(keepLogin());
 
@@ -201,7 +208,10 @@ export default function Profile() {
           {showContent === "myArticles" || showContent === null ? (
             <>
               <h3 className="col-span-2">Your Articles</h3>
-              <div>Content Here</div>
+              <RenderCards
+                articles={myArticles}
+                onButtonDelete={onButtonDelete}
+              />
             </>
           ) : null}
         </div>

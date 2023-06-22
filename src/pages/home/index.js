@@ -13,6 +13,7 @@ import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import RenderCards from "../../components/Card";
 import Carousel from "../../components/Carousel";
+import Pagination from "../../components/Pagination";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -43,6 +44,8 @@ export default function Home() {
   });
 
   const [showModal, setShowModal] = useState(false);
+  const [categoryId, setCategoryId] = useState("");
+  const [categoryName, setCategoryName] = useState(null);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -68,17 +71,9 @@ export default function Home() {
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getPopularBlogs());
-    dispatch(getArticles({ id_cat: 3, page: 1, sort: "ASC" }));
+    dispatch(getArticles({ id_cat: "", page: 1, sort: "DESC" }));
     document.title = "Ngeblog.";
   }, []);
-
-  const tempBlogs = [...articles];
-
-  const sortedBlogs = params.category
-    ? tempBlogs
-        .filter((blog) => blog.Category.name === params.category)
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    : tempBlogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const handlePagination = (type) => {
     window.scrollTo({
@@ -86,22 +81,23 @@ export default function Home() {
       behavior: "smooth",
     });
 
-    if (typeof type === "number") {
-      dispatch(
-        getArticles({
-          id_cat: 3,
-          page: type,
-          sort: "ASC",
-        })
-      );
-      return;
-    }
-
     dispatch(
       getArticles({
-        id_cat: 3,
+        id_cat: categoryId,
         page: type === "prev" ? currentPage - 1 : currentPage + 1,
-        sort: "ASC",
+        sort: "DESC",
+      })
+    );
+  };
+
+  const handleCategory = (id, categoryName) => {
+    setCategoryId(id);
+    setCategoryName(categoryName);
+    dispatch(
+      getArticles({
+        id_cat: id,
+        page: 1,
+        sort: "DESC",
       })
     );
   };
@@ -112,7 +108,7 @@ export default function Home() {
     <div className="container grid grid-cols-1 gap-y-10 px-4 py-24 lg:grid-cols-3 lg:gap-x-10">
       <div className="grid h-fit grid-cols-1 gap-10">
         <Search />
-        <Categories data={categories} />
+        <Categories data={categories} handleCategory={handleCategory} />
         <Popular data={popularBlogs} />
       </div>
 
@@ -136,32 +132,42 @@ export default function Home() {
           </h5>
         ) : (
           <h3 className="col-span-full text-2xl font-semibold text-dark">
-            Latest Post
+            {categoryName ? (
+              <span className="text-lg">
+                <span
+                  className="cursor-pointer hover:text-primary"
+                  onClick={() => handleCategory("", "")}
+                >
+                  Home
+                </span>{" "}
+                / {categoryName}
+              </span>
+            ) : (
+              "Latest Post"
+            )}
           </h3>
         )}
 
-        {sortedBlogs.length > 0 ? (
-          <RenderCards articles={sortedBlogs} onButtonLike={onButtonLike} />
-        ) : (
-          <div className="col-span-2 text-dark">
-            Sorry, no articles have been created yet. You can try another
-            category of articles
-          </div>
-        )}
-        {sortedBlogs.length > 0 ? (
-          <div className="col-span-2 place-self-center">
-            <nav aria-label="Page navigation example">
-              <ul className="inline-flex items-center -space-x-px">
-                <li>
-                  <div
-                    onClick={() => {
-                      if (currentPage === 1) {
-                        return;
-                      }
-                      handlePagination("prev");
-                    }}
-                    className="text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 block cursor-pointer rounded-l-lg border bg-lightest px-3 py-2 leading-tight text-primary hover:bg-light"
-                  >
+        <RenderCards articles={articles} onButtonLike={onButtonLike} />
+
+        <div className="col-span-2 place-self-center">
+          <nav aria-label="Page navigation example">
+            <ul className="inline-flex items-center -space-x-px">
+              <li>
+                <div
+                  onClick={() => {
+                    if (currentPage === 1) {
+                      return;
+                    }
+                    handlePagination("prev");
+                  }}
+                  className={`block  rounded-l-lg border border-primary  px-3 py-2 leading-tight text-primary  ${
+                    currentPage === 1
+                      ? " cursor-default bg-transparent"
+                      : "cursor-pointer bg-lightest hover:bg-primary hover:text-white"
+                  }`}
+                >
+                  <div className="flex">
                     <span className="sr-only">Previous</span>
                     <svg
                       aria-hidden="true"
@@ -176,41 +182,27 @@ export default function Home() {
                         clipRule="evenodd"
                       ></path>
                     </svg>
+                    <p>Prev</p>
                   </div>
-                </li>
+                </div>
+              </li>
 
-                {/* PAGINATION NUMBER */}
-                {Array.from({ length: totalPage }, (_, index) => (
-                  <li
-                    key={index}
-                    onClick={() =>
-                      currentPage === index + 1
-                        ? null
-                        : handlePagination(index + 1)
+              <li>
+                <div
+                  onClick={() => {
+                    if (currentPage === totalPage) {
+                      return;
                     }
-                  >
-                    <span
-                      className={`border  px-3 py-2 leading-tight  ${
-                        currentPage === index + 1
-                          ? "cursor-default  border-primary bg-primary text-white"
-                          : "cursor-pointer bg-lightest text-primary hover:bg-light"
-                      }`}
-                    >
-                      {index + 1}
-                    </span>
-                  </li>
-                ))}
-
-                <li>
-                  <div
-                    onClick={() => {
-                      if (currentPage === totalPage) {
-                        return;
-                      }
-                      handlePagination("next");
-                    }}
-                    className="text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 block cursor-pointer rounded-r-lg border bg-lightest px-3 py-2 leading-tight text-primary hover:bg-light"
-                  >
+                    handlePagination("next");
+                  }}
+                  className={`block  rounded-r-lg border border-primary  px-3 py-2 leading-tight text-primary  ${
+                    currentPage === totalPage
+                      ? " cursor-default bg-transparent"
+                      : "cursor-pointer bg-lightest hover:bg-primary hover:text-white"
+                  }`}
+                >
+                  <div className="flex">
+                    <p>Next</p>
                     <span className="sr-only">Next</span>
                     <svg
                       aria-hidden="true"
@@ -226,11 +218,11 @@ export default function Home() {
                       ></path>
                     </svg>
                   </div>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        ) : null}
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
 
       {!id && showModal && (

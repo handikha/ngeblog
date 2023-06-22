@@ -22,7 +22,6 @@ export default function CreateNewArticle() {
   const [file, setFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [warning, setWarning] = useState(false);
 
   const onDrop = (acceptedFiles) => {
     const selectedFile = acceptedFiles[0];
@@ -57,37 +56,45 @@ export default function CreateNewArticle() {
   });
 
   const formData = new FormData();
+
   const handleSubmitButton = () => {
-    if (formikRef.current && formikRef.current.isValid && file) {
-      setShowModal(true);
-      return;
-    }
-
-    setWarning(true);
-
-    setTimeout(() => {
-      setWarning(false);
-    }, 300);
-  };
-
-  const handlePublishArticle = () => {
     if (formikRef.current) {
       const values = formikRef.current.values;
 
       formData.append("data", JSON.stringify(values));
       formData.append("file", file);
-    }
 
-    dispatch(createNewArticle(formData));
-    dispatch(
-      getArticles({
-        id_cat: "",
-        page: 1,
-        sort: "DESC",
-      })
-    );
-    setShowModal(false);
+      const confirm = window.confirm("Are you sure to publish this article?");
+
+      if (confirm) {
+        dispatch(createNewArticle(formData));
+        dispatch(
+          getArticles({
+            id_cat: "",
+            page: 1,
+            sort: "DESC",
+          })
+        );
+      }
+      // setShowModal(true);
+      // handlePublishArticle();
+    }
   };
+
+  // const handlePublishArticle = () => {
+  //   const dataValue = formData.get("data");
+  //   const fileValue = formData.get("file");
+  //   console.log("data", dataValue);
+  //   console.log("file", fileValue);
+  //   dispatch(createNewArticle(formData));
+  //   dispatch(
+  //     getArticles({
+  //       id_cat: "",
+  //       page: 1,
+  //       sort: "DESC",
+  //     })
+  //   );
+  // };
 
   const handleCancelPublishArticle = () => {
     setShowModal(false);
@@ -154,7 +161,7 @@ export default function CreateNewArticle() {
 
             {/* INPUT CATEGORY */}
             <div className="relative mt-4">
-              <label htmlFor="category" className="block pl-4 text-sm">
+              <label htmlFor="category" className="pl-4 text-sm">
                 Category
               </label>
               <select
@@ -166,7 +173,7 @@ export default function CreateNewArticle() {
                 // }
                 onBlur={handleBlur}
                 required
-                className="mt-1 w-1/2 rounded-full bg-lighter p-2 shadow-md"
+                className="mt-1 bg-lighter"
                 value={values.CategoryId}
               >
                 <option value="" className="text-light-gray">
@@ -271,12 +278,12 @@ export default function CreateNewArticle() {
               </p>
               <div
                 {...getRootProps({
-                  className: `w-1/2 h-fit flex items-center duration-300 justify-center flex-col p-4 border-2 border-dark border-dashed rounded-md ${
+                  className: `w-1/2 h-fit flex items-center justify-center flex-col p-4 border-2 border-dark border-dashed rounded-md ${
                     isDragActive ? "bg-teal-200/20" : null
-                  } ${warning && "bg-red-200"}`,
+                  }`,
                 })}
               >
-                <input {...getInputProps({ name: "image", required: true })} />
+                <input {...getInputProps({ name: "image" })} />
 
                 {previewImage ? (
                   <>
@@ -326,39 +333,34 @@ export default function CreateNewArticle() {
                 />
               )}
             </div>
-            <div className="mt-4 flex justify-end gap-4">
-              <Button isButton isSecondary title="Cancel" />
-              <Button
-                isButton
-                isPrimary
-                type="submit"
-                title="Create Article"
-                onClick={handleSubmitButton}
-              />
-            </div>
+
+            <Button isButton isSecondary title="Cancel" />
+            <Button
+              isButton
+              isPrimary
+              type="submit"
+              title="Create Article"
+              onClick={handleSubmitButton}
+            />
           </form>
         )}
       </Formik>
 
-      {showModal && (
-        <Modal showModal={showModal}>
-          <p>Are you sure to publish this article?</p>
-          <div className="mt-4 flex justify-end gap-4">
-            <Button
-              isButton
-              isSecondary
-              title="Cancel"
-              onClick={handleCancelPublishArticle}
-            />
-            <Button
-              isButton
-              isPrimary
-              title="Sure"
-              onClick={() => handlePublishArticle()}
-            />
-          </div>
-        </Modal>
-      )}
+      {/* <Modal showModal={showModal}>
+        <p>Are you sure to publish this article?</p>
+        <Button
+          isButton
+          isSecondary
+          title="Cancel"
+          onClick={handleCancelPublishArticle}
+        />
+        <Button
+          isButton
+          isPrimary
+          title="Sure"
+          onClick={() => handlePublishArticle()}
+        />
+      </Modal> */}
     </div>
   );
 }

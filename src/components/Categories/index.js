@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Button from "../Button";
 import "./index.css";
 
-export default React.memo(function Categories({ data }) {
+export default React.memo(function Categories({ data, handleCategory }) {
   return (
     <div className="h-auto w-full rounded-xl bg-lighter p-6 font-poppins  shadow-md">
       <h3 className="categories-title ">Categories</h3>
@@ -12,8 +12,9 @@ export default React.memo(function Categories({ data }) {
             key={index}
             className="font-base block py-3 duration-200 hover:pl-2 hover:text-primary"
             title={category.name}
-            type="link"
+            type="button"
             path={`/category/${category.name}`}
+            onClick={() => handleCategory(category.id, category.name)}
           />
         ))}
       </div>

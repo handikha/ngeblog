@@ -16,7 +16,7 @@ const popularBlogsSlice = createSlice({
         state.isPopularLoading = true;
       })
       .addCase(getPopularBlogs.fulfilled, (state, action) => {
-        state.data = action.payload.result;
+        state.data = action.payload;
       })
       .addCase(getPopularBlogs.rejected, (state, action) => {
         state.isPopularLoading = false;

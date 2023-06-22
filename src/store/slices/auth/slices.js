@@ -11,6 +11,7 @@ export const login = createAsyncThunk(
       // @do authentication with payload : { username, password }
       const { data } = await api.post("/auth/login", payload);
       localStorage.setItem("token", data?.token);
+      localStorage.setItem("id", data?.isAccountExist?.id);
 
       if (!data) {
         return rejectWithValue({
