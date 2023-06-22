@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Card from "../../components/Card";
 import Search from "../../components/Search";
 import Categories from "../../components/Categories";
 import Popular from "../../components/Popular";
@@ -8,18 +7,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../store/slices/categories/slices";
 import { getPopularBlogs } from "../../store/slices/popular/slices";
 import { getArticles, likeArticle } from "../../store/slices/blogs/slices";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import HomeLoading from "./home.loading";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import RenderCards from "../../components/Card";
-import Slider from "react-slick";
 import Carousel from "../../components/Carousel";
 
 export default function Home() {
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     isArticlesLoading,
@@ -120,9 +119,11 @@ export default function Home() {
       {/* CARD CONTAINER */}
       <div className="grid h-fit w-full gap-y-10 sm:grid-cols-2 sm:gap-6 lg:col-span-2">
         {/* CAROUSEL */}
-        {/* <div className="col-span-full h-96 rounded-xl bg-lighter">
-          <Carousel blogs={popularBlogs} interval="1000" />
-        </div> */}
+        {location.pathname === "/" && (
+          <div className="col-span-full h-96 overflow-hidden rounded-xl bg-lighter">
+            <Carousel data={popularBlogs} interval="3000" />
+          </div>
+        )}
         {params.category ? (
           <h5 className="col-span-full font-medium text-dark">
             <Button

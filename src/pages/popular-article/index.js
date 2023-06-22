@@ -52,7 +52,7 @@ export default function PopularArticle() {
           <div className="text-sm italic text-gray">
             <span>
               Written by{" "}
-              {/* <span className="font-medium">{article.User.username}</span>{" "} */}
+              <span className="font-medium">{article.User.username}</span>{" "}
             </span>
             <span className="mx-2">&#183;</span>
             <span>{formatDate(article.createdAt)}</span>

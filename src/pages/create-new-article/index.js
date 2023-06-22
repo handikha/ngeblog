@@ -53,12 +53,15 @@ export default function CreateNewArticle() {
   const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
     onDrop,
     maxFiles: 1,
+    maxSize: 1000000,
     accept: { "image/*": [".jpg", ".png", ".jpeg"] },
     noClick: true,
     noKeyboard: true,
   });
 
   // console.log(categories);
+
+  const formData = new FormData();  
 
   return (
     <div className="container flex justify-center px-4 py-24">
@@ -115,7 +118,6 @@ export default function CreateNewArticle() {
             </div>
 
             {/* INPUT CATEGORY */}
-
             <div className="relative mt-4">
               <label htmlFor="category" className="pl-4 text-sm">
                 Category
@@ -213,10 +215,7 @@ export default function CreateNewArticle() {
                   }`,
                 })}
               >
-                <input
-                  {...getInputProps({ name: "image" })}
-                  value={values.imageUrl}
-                />
+                <input {...getInputProps({ name: "image" })} />
 
                 {previewImage ? (
                   <>
@@ -266,6 +265,67 @@ export default function CreateNewArticle() {
                 />
               )}
             </div>
+
+            {/* <div className="form-row ">
+              <label>Picture</label>
+              <div
+                className={`alert alert-error ${file?.code ? "" : "hidden"}`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 shrink-0 stroke-current"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>{file?.code}</span>
+              </div>
+              <div
+                className={`file-input-bordered file-input-md flex h-auto border-2 py-5 ${
+                  file && file.name === null && touched.picture
+                    ? "input-error"
+                    : "border-cyan-800"
+                }  w-full break-all rounded-md`}
+              >
+                <input {...getInputProps({ name: "image" })} />
+                <a
+                  onClick={open}
+                  className="link link-hover ml-2 w-auto flex-grow rounded-lg text-[12pt] font-semibold text-amber-950"
+                >
+                  {file?.name ? file.name : "Choose a file"}
+                </a>
+                <button
+                  className={`btn btn-square btn-outline p-0 ${
+                    file === "null" || file?.code ? "hidden" : ""
+                  }`}
+                  // onClick={onButtonCancelUpload}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+              {file && file.name == null && touched.picture ? (
+                <span className="error">Picture is required</span>
+              ) : null}
+            </div> */}
 
             <Button isButton isSecondary title="Cancel" />
             <Button isButton isPrimary type="submit" title="Create Article" />

@@ -73,7 +73,14 @@ export default function App() {
           <Route path="/article/:id" element={<Article />} />
           <Route path="/popular-article/:id" element={<PopularArticle />} />
 
-          <Route path="/create-new-article" element={<CreateNewArticle />} />
+          <Route
+            path="/create-new-article"
+            element={
+              <ProtectedRoute>
+                <CreateNewArticle />
+              </ProtectedRoute>
+            }
+          />
 
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />

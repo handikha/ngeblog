@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "../Button";
-import Blog from "../../json/blogs.json";
 import formatDate from "../../utils/formatDate";
 import { HiHeart } from "react-icons/hi2";
 
