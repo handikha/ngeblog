@@ -79,7 +79,6 @@ export default function Login() {
                 loginValidationSchema.validateSync(values);
                 return {};
               } catch (error) {
-                console.log("error", error?.message);
                 return { message: error?.message };
               }
             }}
@@ -143,9 +142,7 @@ export default function Login() {
                   Forgot Password?
                 </p>
                 {error && (
-                  <div className="mt-2 pl-5 text-xs text-red-500">
-                    {error}
-                  </div>
+                  <div className="mt-2 pl-5 text-xs text-red-500">{error}</div>
                 )}
 
                 <Button

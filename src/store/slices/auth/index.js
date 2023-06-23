@@ -13,6 +13,7 @@ import {
   changeUsername,
   changePhoneNumber,
   changePassword,
+  changeEmail,
 } from "./slices";
 
 // @import schema validation
@@ -28,6 +29,7 @@ const INITIAL_STATE = {
   isChangeUsernameLoading: false,
   isChangePhoneNumberLoading: false,
   isChangePasswordLoading: false,
+  isChangeEmailLoading: false,
   id: null,
   username: "",
   email: "",
@@ -165,6 +167,15 @@ const authSlice = createSlice({
       })
       .addCase(updateImageProfile.rejected, (state, action) => {
         state.isUploadImageLoading = false;
+      })
+      .addCase(changeEmail.pending, (state, action) => {
+        state.isChangeEmailLoading = true;
+      })
+      .addCase(changeEmail.fulfilled, (state, action) => {
+        state.isChangeEmailLoading = false;
+      })
+      .addCase(changeEmail.rejected, (state, action) => {
+        state.isChangeEmailLoading = false;
       })
 
       // auth success handler

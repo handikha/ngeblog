@@ -140,6 +140,22 @@ export const changePhoneNumber = createAsyncThunk(
   }
 );
 
+export const changeEmail = createAsyncThunk(
+  "auth/changeEmail",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await api.patch("auth/changeEmail", payload);
+      Toast.success(data.message);
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
+      return data;
+    } catch (error) {
+      Toast.error(error.response ? error.response.data : error);
+      return rejectWithValue(error.response ? error.response.data : error);
+    }
+  }
+);
+
 export const verifyAccount = createAsyncThunk(
   "auth/verifyAccount",
   async (payload, { rejectWithValue }) => {

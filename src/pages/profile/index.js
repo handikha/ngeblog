@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  changeEmail,
   changePassword,
   changePhoneNumber,
   changeUsername,
@@ -16,6 +17,7 @@ import ModalChangeUserName from "./modal.change.username";
 import ModalChangePhoneNumber from "./modal.change.phonenumber";
 import ComponentProfile from "./component.profile";
 import { deleteArticle, getArticles } from "../../store/slices/blogs/slices";
+import ModalChangeEmail from "./modal.change.email";
 
 export default function Profile() {
   const location = useLocation();
@@ -27,12 +29,17 @@ export default function Profile() {
   const reNewPasswordRef = useRef(null);
   const newUsernameRef = useRef(null);
   const newPhoneNumberRef = useRef(null);
+  const currentEmailRef = useRef(null);
+  const newEmailRef = useRef(null);
 
   const newUsernameValue = newUsernameRef.current?.value;
   const newPhoneNumberValue = newPhoneNumberRef.current?.value;
+  const currentEmailValue = currentEmailRef.current?.value;
+  const newEmailValue = newEmailRef.current?.value;
 
   const formikChangeUsernameRef = useRef(null);
   const formikChangePhoneNumberRef = useRef(null);
+  const formikChangeEmailRef = useRef(null);
 
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [formStep, setFormStep] = useState(1);
@@ -42,6 +49,7 @@ export default function Profile() {
     isChangeUsernameLoading,
     isChangePhoneNumberLoading,
     isChangePasswordLoading,
+    isChangeEmailLoading,
     articles,
     isVerified,
     error,
@@ -53,6 +61,7 @@ export default function Profile() {
       profile: state.auth,
       isChangeUsernameLoading: state.auth.isChangeUsernameLoading,
       isChangePhoneNumberLoading: state.auth.isChangePhoneNumberLoading,
+      isChangeEmailLoading: state.auth.isChangeEmailLoading,
       isChangePasswordLoading: state.auth.isChangePasswordLoading,
       isVerified: state.auth.isVerified,
       isArticlesLoading: state.blogs.isArticlesLoading,
@@ -137,6 +146,19 @@ export default function Profile() {
     );
 
     setIsEmailSent(true);
+  };
+
+  // HANDLE CHANGE EMAIL
+  const onButtonChangeEmail = () => {
+    dispatch(
+      changeEmail({
+        currentEmail: currentEmailValue,
+        newEmail: newEmailValue,
+      })
+    );
+
+    setIsEmailSent(true);
+    // console.log("current email", currentEmailValue, "new email", newEmailValue);
   };
 
   // HANDLE CHANGE PASSWORD
@@ -300,6 +322,24 @@ export default function Profile() {
           error={error}
           success={success}
           formikChangePhoneNumberRef={formikChangePhoneNumberRef}
+        />
+      )}
+
+      {/* CHANGE EMAIL MODAL */}
+      {showModal.type === "changeEmail" && isVerified && (
+        <ModalChangeEmail
+          refCurrentEmail={currentEmailRef}
+          refNewEmail={newEmailRef}
+          isChangeEmailLoading={isChangeEmailLoading}
+          isEmailSent={isEmailSent}
+          handleCloseModal={handleCloseModal}
+          onButtonChangeEmail={onButtonChangeEmail}
+          onButtonNext={() => handleStepForm("next")}
+          onButtonPrev={() => handleStepForm("prev")}
+          currentStep={formStep}
+          error={error}
+          success={success}
+          formikChangeEmailRef={formikChangeEmailRef}
         />
       )}
 

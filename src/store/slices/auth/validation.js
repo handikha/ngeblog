@@ -110,3 +110,19 @@ export const changePhoneNumberValidationSchema = Yup.object({
     .max(12, "Max phone number is 12 characters")
     .required("Phone number is required"),
 });
+
+export const changeEmailValidationSchema = Yup.object({
+  currentEmail: Yup.string()
+    .matches(
+      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+      "Invalid email input"
+    )
+    .required("Email is required"),
+
+  newEmail: Yup.string()
+    .matches(
+      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+      "Invalid email input"
+    )
+    .required("New email is required"),
+});
