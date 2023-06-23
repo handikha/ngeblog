@@ -65,7 +65,7 @@ const authSlice = createSlice({
         state.isLoginLoading = true;
       })
       .addCase(login.rejected, (state, action) => {
-        state.isLoginLoading = true;
+        state.isLoginLoading = false;
         state.error = action.payload;
       })
 
@@ -103,9 +103,13 @@ const authSlice = createSlice({
       .addCase(forgotPassword.pending, (state, action) => {
         state.isForgotPasswordLoading = true;
       })
-
       .addCase(forgotPassword.rejected, (state, action) => {
         state.isForgotPasswordLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.isForgotPasswordLoading = false;
+        state.error = false;
       })
 
       .addCase(resetPassword.pending, (state, action) => {
@@ -113,6 +117,7 @@ const authSlice = createSlice({
       })
       .addCase(resetPassword.fulfilled, (state, action) => {
         state.isResetPasswordLoading = false;
+        state.success = true;
       })
 
       .addCase(changeUsername.pending, (state, action) => {

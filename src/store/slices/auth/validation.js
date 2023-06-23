@@ -34,6 +34,15 @@ export const loginValidationSchema = Yup.object({
   password: Yup.string().required("password is required."),
 });
 
+export const forgotPasswordVaidationSchema = Yup.object({
+  email: Yup.string()
+    .matches(
+      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+      "Invalid email input"
+    )
+    .required("Email is required"),
+});
+
 export const resetPasswordValidationSchema = Yup.object({
   password: Yup.string()
     .min(6, "Password must be at least 6 characters.")
@@ -80,7 +89,6 @@ export const createNewArticleValidationSchema = Yup.object({
   content: Yup.string().required("Content is required"),
 
   country: Yup.string().required("Country is required."),
-
 
   keywords: Yup.string().required("Keyword is required"),
 });

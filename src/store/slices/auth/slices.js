@@ -76,9 +76,10 @@ export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
   async (payload, { rejectWithValue }) => {
     try {
-      await api.put("/auth/forgotPass", payload);
+      const response = await api.put("/auth/forgotPass", payload);
+      return response.message;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.response ? error.response?.data : error);
     }
   }
 );
@@ -87,8 +88,11 @@ export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (payload, { rejectWithValue }) => {
     try {
-      await api.patch("/auth/resetPass", payload);
+      localStorage.setItem("token", payload.token);
+      const response = await api.patch("/auth/resetPass", payload.data);
+      Toast.success(response?.data?.message);
     } catch (error) {
+      Toast.error(error?.message);
       return rejectWithValue(error.response ? error.response.data : error);
     }
   }

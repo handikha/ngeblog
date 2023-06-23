@@ -38,6 +38,7 @@ export default function Button(props) {
       onClick={props.onClick}
       disabled={props.isDisabled}
       onKeyDown={props.onKeydown}
+      onSubmit={props.onSubmit}
     >
       {props.isLoading ? (
         <div role="status" className="flex justify-center">
@@ -79,4 +80,5 @@ Button.propTypes = {
   isBLock: propTypes.bool,
   onClick: propTypes.func,
   onKeydown: propTypes.func,
+  onSubmit: propTypes.func,
 };
