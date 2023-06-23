@@ -3,14 +3,15 @@ import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 export default function Footer() {
   const footers = [
     {
-      title: "Blog.",
-      items: [{ title: "\u00A9 2023 Handikha Jul" }, { type: "text" }],
+      title: "Ngeblog.",
+      items: [
+        { title: "Copyright \u00A9 2023 -  All right reserved" },
+        { type: "text" },
+      ],
     },
     {
       title: "About Us",
       items: [
-        { title: "Lorem Ipsum", path: "/", type: "link" },
-        { title: "Dolor Sit", path: "/", type: "link" },
         { title: "Lorem Ipsum", path: "/", type: "link" },
         { title: "Dolor Sit", path: "/", type: "link" },
       ],
@@ -18,8 +19,6 @@ export default function Footer() {
     {
       title: "Product",
       items: [
-        { title: "Lorem Ipsum", path: "/", type: "link" },
-        { title: "Dolor Sit", path: "/", type: "link" },
         { title: "Lorem Ipsum", path: "/", type: "link" },
         { title: "Dolor Sit", path: "/", type: "link" },
       ],

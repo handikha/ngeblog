@@ -12,11 +12,12 @@ export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isRegisterLoading, id, isVerfied } = useSelector((state) => {
+  const { isRegisterLoading, id, isVerfied, error } = useSelector((state) => {
     return {
       isRegisterLoading: state.auth.isRegisterLoading,
       id: state.auth.id,
       isVerfied: state.auth.isVerfied,
+      error: state.auth.error,
     };
   });
 
@@ -275,7 +276,7 @@ export default function Register() {
                 ) : (
                   <div className="mt-1 h-4  pl-5 text-xs text-red-500"></div>
                 )}
-
+                <span className="text-xs text-red-500">{error}</span>
                 <Button
                   title="Register"
                   className="mt-4 w-full shadow-md"

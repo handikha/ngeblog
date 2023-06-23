@@ -59,7 +59,7 @@ export const register = createAsyncThunk(
   "auth/register",
   async (payload, { rejectWithValue }) => {
     try {
-      const { data } = await api.post("/auth", payload);
+      const { data } = await api.post("/auth/", payload);
 
       // save token
       localStorage.setItem("token", data?.token);
@@ -160,6 +160,7 @@ export const verifyAccount = createAsyncThunk(
   "auth/verifyAccount",
   async (payload, { rejectWithValue }) => {
     try {
+      localStorage.setItem("token", payload);
       await api.patch("/auth/verify");
 
       return;

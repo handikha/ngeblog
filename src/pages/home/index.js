@@ -14,6 +14,7 @@ import Modal from "../../components/Modal";
 import RenderCards from "../../components/Card";
 import Carousel from "../../components/Carousel";
 import Pagination from "../../components/Pagination";
+import { HiArrowDown, HiArrowUp } from "react-icons/hi2";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [categoryId, setCategoryId] = useState("");
   const [categoryName, setCategoryName] = useState(null);
+  const [asc, setAsc] = useState(false);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -71,7 +73,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getPopularBlogs());
-    dispatch(getArticles({ id_cat: "", page: 1, sort: "DESC" }));
+    dispatch(getArticles({ id_cat: "", page: 1, sort: asc ? "ASC" : "DESC" }));
     document.title = "Ngeblog.";
     window.scrollTo({
       top: 0,
@@ -89,7 +91,7 @@ export default function Home() {
       getArticles({
         id_cat: categoryId,
         page: type === "prev" ? currentPage - 1 : currentPage + 1,
-        sort: "DESC",
+        sort: asc ? "ASC" : "DESC",
       })
     );
   };
@@ -101,7 +103,7 @@ export default function Home() {
       getArticles({
         id_cat: id,
         page: 1,
-        sort: "DESC",
+        sort: asc ? "ASC" : "DESC",
       })
     );
   };
@@ -135,7 +137,7 @@ export default function Home() {
             / {params.category}
           </h5>
         ) : (
-          <h3 className="col-span-full text-2xl font-semibold text-dark">
+          <h3 className=" col-span-full inline-block text-2xl font-semibold text-dark">
             {categoryName ? (
               <span className="text-lg">
                 <span
