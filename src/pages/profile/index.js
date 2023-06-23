@@ -36,7 +36,6 @@ export default function Profile() {
 
   const {
     profile,
-    isKeepLoginLoading,
     isChangeUsernameLoading,
     isChangePhoneNumberLoading,
     isChangePasswordLoading,
@@ -49,7 +48,6 @@ export default function Profile() {
   } = useSelector((state) => {
     return {
       profile: state.auth,
-      isKeepLoginLoading: state.auth.isKeepLoginLoading,
       isChangeUsernameLoading: state.auth.isChangeUsernameLoading,
       isChangePhoneNumberLoading: state.auth.isChangePhoneNumberLoading,
       isChangePasswordLoading: state.auth.isChangePasswordLoading,
@@ -57,7 +55,6 @@ export default function Profile() {
       isArticlesLoading: state.blogs.isArticlesLoading,
       articles: state.blogs.articles,
       myArticles: state.blogs.myArticles,
-
       error: state.auth.error,
       success: state.auth.success,
     };
@@ -139,6 +136,7 @@ export default function Profile() {
     setIsEmailSent(true);
   };
 
+  // HANDLE CHANGE PASSWORD
   const handleChangePasswordButton = () => {
     const confirmed = window.confirm(
       "Are you sure you want to change the password?"
@@ -183,7 +181,11 @@ export default function Profile() {
 
     const handleKeyDownEvent = (event) => {
       if (event.key === "Escape") {
-        if (isChangeUsernameLoading) {
+        if (
+          isChangeUsernameLoading ||
+          isChangePasswordLoading ||
+          isChangePhoneNumberLoading
+        ) {
           return;
         }
         handleCloseModal();
