@@ -61,6 +61,7 @@ const blogsSlice = createSlice({
 
       .addCase(createNewArticle.pending, (state, action) => {
         state.isLoading = true;
+        state.success = false;
       })
       .addCase(createNewArticle.fulfilled, (state, action) => {
         state = Object.assign(state, {
@@ -71,6 +72,7 @@ const blogsSlice = createSlice({
       })
       .addCase(createNewArticle.rejected, (state, action) => {
         state.isLoading = false;
+        state.success = false;
       })
 
       .addCase(deleteArticle.pending, (state, action) => {

@@ -68,7 +68,7 @@ export default function CreateNewArticle() {
   const formData = new FormData();
 
   const handleSubmitButton = () => {
-    if (formikRef.current && formikRef.current.isValid && file) {
+    if (formikRef.current.isValid && file) {
       setShowModal(true);
       return;
     }
@@ -96,6 +96,10 @@ export default function CreateNewArticle() {
         sort: "DESC",
       })
     );
+
+    formikRef.current.resetForm();
+    setFile(null);
+    setPreviewImage(null);
     // setShowModal(false);
   };
 
@@ -325,14 +329,14 @@ export default function CreateNewArticle() {
                 isPrimary
                 type="submit"
                 title="Create Article"
-                onClick={handleSubmitButton}
+                onClick={() => handleSubmitButton()}
               />
             </div>
           </form>
         )}
       </Formik>
 
-      {showModal && (
+      {showModal && formikRef.current.values && (
         <Modal showModal={showModal}>
           {isLoading && (
             <div className="flex w-full justify-center">

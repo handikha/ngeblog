@@ -3,6 +3,8 @@ import Spinner from "../../components/spinner";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button";
 import { HiCheckCircle, HiXCircle } from "react-icons/hi2";
+import { Formik } from "formik";
+import { changeUsernameValidationSchema } from "../../store/slices/auth/validation";
 
 export default function ModalChangeUserName({
   isChangeUsernameLoading,
@@ -16,43 +18,68 @@ export default function ModalChangeUserName({
   refUsername,
   error,
   success,
+  formikChangeUsernameRef,
 }) {
   return (
     <Modal showModal={true}>
       <p>Change Username</p>
 
       {currentStep === 1 && (
-        <form className="w-full pt-4 text-sm">
-          <div className="relative">
-            <input
-              ref={refUsername}
-              defaultValue={isEmailSent ? "" : username}
-              required
-              type="text"
-              className="mt-4 bg-lighter"
-              id="changeUsername"
-            />
-            <label htmlFor="changeUsername" className="placeholder">
-              Change Username
-            </label>
-          </div>
+        <Formik
+          innerRef={formikChangeUsernameRef}
+          initialValues={{ username: username }}
+          validationSchema={changeUsernameValidationSchema}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <form className="w-full pt-4 text-sm">
+              <div className="relative">
+                <input
+                  ref={refUsername}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.username}
+                  required
+                  type="text"
+                  className="mt-4 bg-lighter"
+                  id="changeUsername"
+                  name="username"
+                />
+                <label htmlFor="changeUsername" className="placeholder">
+                  Change Username
+                </label>
+              </div>
+              <div className="px-5">
+                <span className=" text-xs text-red-500">{errors.username}</span>
+              </div>
 
-          <div className="mt-6 flex justify-end gap-4">
-            <Button
-              title="Cancel"
-              className="font-medium hover:text-primary"
-              onClick={handleCloseModal}
-              isButton
-            />
-            <Button
-              type="button"
-              onClick={onButtonNext}
-              title="Next"
-              isButton
-              isPrimary
-            />
-          </div>
-        </form>
+              <div className="mt-6 flex justify-end gap-4">
+                <Button
+                  title="Cancel"
+                  className="font-medium hover:text-primary"
+                  onClick={handleCloseModal}
+                  isButton
+                />
+                {!errors.username && (
+                  <Button
+                    type="button"
+                    onClick={onButtonNext}
+                    title="Next"
+                    isButton
+                    isPrimary
+                  />
+                )}
+              </div>
+            </form>
+          )}
+        </Formik>
       )}
 
       {currentStep === 2 && (

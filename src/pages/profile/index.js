@@ -31,6 +31,9 @@ export default function Profile() {
   const newUsernameValue = newUsernameRef.current?.value;
   const newPhoneNumberValue = newPhoneNumberRef.current?.value;
 
+  const formikChangeUsernameRef = useRef(null);
+  const formikChangePhoneNumberRef = useRef(null);
+
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [formStep, setFormStep] = useState(1);
 
@@ -278,6 +281,7 @@ export default function Profile() {
           currentStep={formStep}
           error={error}
           success={success}
+          formikChangeUsernameRef={formikChangeUsernameRef}
         />
       )}
 
@@ -295,6 +299,7 @@ export default function Profile() {
           currentStep={formStep}
           error={error}
           success={success}
+          formikChangePhoneNumberRef={formikChangePhoneNumberRef}
         />
       )}
 

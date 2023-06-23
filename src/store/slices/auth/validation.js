@@ -92,3 +92,21 @@ export const createNewArticleValidationSchema = Yup.object({
 
   keywords: Yup.string().required("Keyword is required"),
 });
+
+export const changeUsernameValidationSchema = Yup.object({
+  username: Yup.string()
+    .min(6, "Username must be at least 6 characters")
+    .matches(
+      /^[a-zA-Z0-9._-]+$/,
+      "Username must be alphanumeric and symbols (.) (_) (-)"
+    )
+    .required("Username is required"),
+});
+
+export const changePhoneNumberValidationSchema = Yup.object({
+  phone: Yup.string()
+    .matches(/^[0-9]+$/, "Phone number must be numeric")
+    .min(10, "Phone number must be at least 10 characters")
+    .max(12, "Max phone number is 12 characters")
+    .required("Phone number is required"),
+});

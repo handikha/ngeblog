@@ -3,6 +3,11 @@ import Spinner from "../../components/spinner";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button";
 import { HiCheckCircle, HiXCircle } from "react-icons/hi2";
+import { Formik } from "formik";
+import {
+  changePhoneNumberValidationSchema,
+  changeUsernameValidationSchema,
+} from "../../store/slices/auth/validation";
 
 export default function ModalChangePhoneNumber({
   isChangePhoneNumberLoading,
@@ -16,43 +21,69 @@ export default function ModalChangePhoneNumber({
   refPhoneNumber,
   error,
   success,
+  formikChangePhoneNumberRef,
 }) {
   return (
     <Modal showModal={true}>
       <p>Change Phone Number</p>
 
       {currentStep === 1 && (
-        <form className="w-full pt-4 text-sm">
-          <div className="relative">
-            <input
-              ref={refPhoneNumber}
-              defaultValue={isEmailSent ? "" : phone}
-              required
-              type="text"
-              className="mt-4 bg-lighter"
-              id="changePhone"
-            />
-            <label htmlFor="changePhone" className="placeholder">
-              Change Phone
-            </label>
-          </div>
+        <Formik
+          innerRef={formikChangePhoneNumberRef}
+          initialValues={{ phone: phone }}
+          validationSchema={changePhoneNumberValidationSchema}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <form className="w-full pt-4 text-sm">
+              <div className="relative">
+                <input
+                  ref={refPhoneNumber}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required
+                  value={values.phone}
+                  type="text"
+                  className="mt-4 bg-lighter"
+                  id="phone"
+                  name="phone"
+                />
+                <label htmlFor="phone" className="placeholder">
+                  Change Phone Number
+                </label>
+              </div>
 
-          <div className="mt-6 flex justify-end gap-4">
-            <Button
-              title="Cancel"
-              className="font-medium hover:text-primary"
-              onClick={handleCloseModal}
-              isButton
-            />
-            <Button
-              type="button"
-              onClick={onButtonNext}
-              title="Next"
-              isButton
-              isPrimary
-            />
-          </div>
-        </form>
+              <div className="px-5">
+                <span className=" text-xs text-red-500">{errors.phone}</span>
+              </div>
+
+              <div className="mt-6 flex justify-end gap-4">
+                <Button
+                  title="Cancel"
+                  className="font-medium hover:text-primary"
+                  onClick={handleCloseModal}
+                  isButton
+                />
+                {!errors.phone && (
+                  <Button
+                    type="button"
+                    onClick={onButtonNext}
+                    title="Next"
+                    isButton
+                    isPrimary
+                  />
+                )}
+              </div>
+            </form>
+          )}
+        </Formik>
       )}
 
       {currentStep === 2 && (
