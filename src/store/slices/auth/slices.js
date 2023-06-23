@@ -160,7 +160,7 @@ export const verifyAccount = createAsyncThunk(
   "auth/verifyAccount",
   async (payload, { rejectWithValue }) => {
     try {
-      localStorage.setItem("token", payload);
+      // localStorage.setItem("token", payload);
       await api.patch("/auth/verify");
 
       return;
