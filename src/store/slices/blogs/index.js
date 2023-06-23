@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   isLikeArticleLoading: false,
   isUploaded: false,
   isDeleted: false,
+  success: null,
 };
 
 const blogsSlice = createSlice({
@@ -38,6 +39,7 @@ const blogsSlice = createSlice({
           currentPage: action.payload?.data.blogPage,
           allArticles: action.payload?.response,
           myArticles: action.payload?.myArticles,
+          isUploaded: false,
         });
       })
 
@@ -64,6 +66,7 @@ const blogsSlice = createSlice({
         state = Object.assign(state, {
           isLoading: false,
           isUploaded: true,
+          success: action.payload,
         });
       })
       .addCase(createNewArticle.rejected, (state, action) => {

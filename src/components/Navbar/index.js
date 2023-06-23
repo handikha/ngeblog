@@ -106,12 +106,12 @@ export default function Navbar() {
                         className="h-full w-full rounded-full object-cover"
                       />
                     )}
-                    <img
+                    {/* <img
                       src={process.env.REACT_APP_IMAGE_URL + imgProfile}
                       // src="https://source.unsplash.com/50x50?cat"
                       alt=""
                       className="h-full w-full border-red-400 object-cover"
-                    />
+                    /> */}
                   </div>
                 </div>
               ) : (
@@ -143,17 +143,17 @@ export default function Navbar() {
                   }`}
                 >
                   <Button
-                    title="Create New Article"
+                    title="Profile"
                     type="link"
-                    path="/create-new-article"
+                    path="/profile"
                     className="block py-3 duration-200 hover:pl-2 hover:text-primary"
                     onClick={handleProfileButton}
                   />
 
                   <Button
-                    title="Profile"
+                    title="Create New Article"
                     type="link"
-                    path="/profile"
+                    path="/create-new-article"
                     className="block py-3 duration-200 hover:pl-2 hover:text-primary"
                     onClick={handleProfileButton}
                   />

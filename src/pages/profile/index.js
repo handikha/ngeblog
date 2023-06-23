@@ -15,7 +15,7 @@ import Spinner from "../../components/spinner";
 import ModalChangeUserName from "./modal.change.username";
 import ModalChangePhoneNumber from "./modal.change.phonenumber";
 import ComponentProfile from "./component.profile";
-import { deleteArticle } from "../../store/slices/blogs/slices";
+import { deleteArticle, getArticles } from "../../store/slices/blogs/slices";
 
 export default function Profile() {
   const location = useLocation();
@@ -45,6 +45,7 @@ export default function Profile() {
     error,
     success,
     myArticles,
+    isArticlesLoading,
   } = useSelector((state) => {
     return {
       profile: state.auth,
@@ -52,10 +53,11 @@ export default function Profile() {
       isChangeUsernameLoading: state.auth.isChangeUsernameLoading,
       isChangePhoneNumberLoading: state.auth.isChangePhoneNumberLoading,
       isChangePasswordLoading: state.auth.isChangePasswordLoading,
+      isVerified: state.auth.isVerified,
+      isArticlesLoading: state.blogs.isArticlesLoading,
       articles: state.blogs.articles,
       myArticles: state.blogs.myArticles,
-      isLoading: state.blogs.isLoading,
-      isVerified: state.auth.isVerified,
+
       error: state.auth.error,
       success: state.auth.success,
     };
@@ -158,11 +160,26 @@ export default function Profile() {
     const confirm = window.confirm("Are you sure want to delete this article?");
     if (confirm) {
       dispatch(deleteArticle(id));
+      dispatch(
+        getArticles({
+          id_cat: "",
+          page: 1,
+          sort: "ASC",
+        })
+      );
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   useEffect(() => {
     dispatch(keepLogin());
+    dispatch(
+      getArticles({
+        id_cat: "",
+        page: 1,
+        sort: "ASC",
+      })
+    );
 
     const handleKeyDownEvent = (event) => {
       if (event.key === "Escape") {
@@ -197,23 +214,34 @@ export default function Profile() {
             showContent={showContent}
           />
         </div>
-        <div className="mt-8 grid h-fit w-full gap-y-10 sm:grid-cols-2 sm:gap-6 lg:col-span-2 lg:mt-0">
-          {showContent === "likedArticles" && (
+        <div className="mt-8 grid h-fit w-full gap-y-10 sm:col-span-2 sm:grid-cols-2 sm:gap-6 lg:mt-0">
+          {isArticlesLoading ? (
+            <div className="col-span-full flex h-screen w-full items-center justify-center">
+              <Spinner />
+            </div>
+          ) : (
             <>
-              <h3 className="col-span-2">Liked Articles</h3>
-              <RenderCards articles={articles} />
+              {showContent === "likedArticles" && (
+                <>
+                  <h3 className="col-span-2">Liked Articles</h3>
+                  <RenderCards articles={articles} />
+                </>
+              )}
+
+              {(showContent === "myArticles" || showContent === null) && (
+                <>
+                  <h3 className="col-span-2">Your Articles</h3>
+                  <div className="grid h-fit w-full gap-y-10 sm:col-span-2 sm:grid-cols-2 sm:gap-6">
+                    <RenderCards
+                      articles={myArticles}
+                      onButtonDelete={onButtonDelete}
+                      username={profile.username}
+                    />
+                  </div>
+                </>
+              )}
             </>
           )}
-
-          {showContent === "myArticles" || showContent === null ? (
-            <>
-              <h3 className="col-span-2">Your Articles</h3>
-              <RenderCards
-                articles={myArticles}
-                onButtonDelete={onButtonDelete}
-              />
-            </>
-          ) : null}
         </div>
       </div>
 

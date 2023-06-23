@@ -28,6 +28,13 @@ export default function PopularArticle() {
     dispatch(getCategories());
     dispatch(getPopularBlogs());
   }, []);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [id]);
   // console.log(articles);
 
   const article =
@@ -65,7 +72,7 @@ export default function PopularArticle() {
       </div>
       <div className="grid h-fit grid-cols-1 gap-10">
         {/* <Search /> */}
-        <Categories data={categories} />
+        {/* <Categories data={categories} /> */}
         <Popular data={popularBlogs} />
       </div>
     </div>

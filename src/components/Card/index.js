@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaHeart, FaRegEye, FaRegHeart } from "react-icons/fa";
 import formatNumber from "../../utils/formatNumber";
 import Button from "../Button";
-import { HiOutlineBookmark } from "react-icons/hi2";
+import { HiOutlineTrash } from "react-icons/hi2";
 import formatDate from "../../utils/formatDate";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +16,7 @@ function Card({
   image,
   onButtonLike,
   onButtonDelete,
+  username,
 }) {
   const navigate = useNavigate();
   return (
@@ -32,7 +33,7 @@ function Card({
         <div className="">
           <a
             onClick={() => navigate(`/article/${id}`)}
-            className="cursor-pointer text-xl font-semibold text-dark duration-150 hover:text-primary"
+            className="cursor-pointer text-xl font-semibold capitalize text-dark duration-150 hover:text-primary"
           >
             {title}
           </a>
@@ -40,7 +41,7 @@ function Card({
           <div className="flex gap-2">
             <Button
               type="link"
-              path={`/category/${category}`}
+              // path={`/category/${category}`}
               title={category}
               className="text-xs text-light-gray hover:text-primary"
             />
@@ -72,12 +73,12 @@ function Card({
             <FaRegHeart />
           </span>
 
-          {author === "handikha2" && (
+          {author === username && (
             <span
               onClick={onButtonDelete}
               className="cursor-pointer select-none rounded-md bg-red-400 p-2 text-white hover:bg-red-500"
             >
-              DELETE
+              <HiOutlineTrash />
             </span>
           )}
         </div>
@@ -96,6 +97,7 @@ export default function RenderCards({
   articles = [],
   onButtonLike = (id) => {},
   onButtonDelete = (id) => {},
+  username,
 }) {
   return articles.map((article, index) => (
     <Card
@@ -109,6 +111,7 @@ export default function RenderCards({
       category={article.Category.name}
       onButtonLike={() => onButtonLike(article.id)}
       onButtonDelete={() => onButtonDelete(article.id)}
+      username={username}
     />
   ));
 }

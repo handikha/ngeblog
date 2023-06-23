@@ -8,16 +8,25 @@ import { useDropzone } from "react-dropzone";
 import { createNewArticleValidationSchema } from "../../store/slices/auth/validation";
 import Modal from "../../components/Modal";
 import { createNewArticle, getArticles } from "../../store/slices/blogs/slices";
+import Spinner from "../../components/spinner";
+import { HiCheckCircle } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateNewArticle() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formikRef = useRef();
 
-  const { categories } = useSelector((state) => {
-    return {
-      categories: state.categories.data,
-    };
-  });
+  const { categories, isLoading, isUploaded, success } = useSelector(
+    (state) => {
+      return {
+        categories: state.categories.data,
+        isLoading: state.blogs.isLoading,
+        isUploaded: state.blogs.isUploaded,
+        success: state.blogs.success,
+      };
+    }
+  );
 
   const [file, setFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -57,6 +66,7 @@ export default function CreateNewArticle() {
   });
 
   const formData = new FormData();
+
   const handleSubmitButton = () => {
     if (formikRef.current && formikRef.current.isValid && file) {
       setShowModal(true);
@@ -86,10 +96,15 @@ export default function CreateNewArticle() {
         sort: "DESC",
       })
     );
-    setShowModal(false);
+    // setShowModal(false);
   };
 
   const handleCancelPublishArticle = () => {
+    setShowModal(false);
+  };
+
+  const handleCloseModal = () => {
+    navigate("/profile");
     setShowModal(false);
   };
 
@@ -179,21 +194,6 @@ export default function CreateNewArticle() {
                 ))}
               </select>
             </div>
-            {/* <div className="relative mt-4">
-              <label htmlFor="category" className="pl-4 text-sm">
-                Category
-              </label>
-              <input
-                value={values.CategoryId}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
-                type="text"
-                name="CategoryId"
-                className="mt-1 bg-lighter"
-                id="category"
-              />
-            </div> */}
 
             {/* INPUT KEYWORDS */}
             <div className="relative col-span-1 mt-4">
@@ -316,15 +316,7 @@ export default function CreateNewArticle() {
                     // isDisabled={isUploadImageLoading}
                   />
                 </>
-              ) : (
-                <Button
-                  // onClick={onButtonUpload}
-                  title="Upload Image"
-                  isButton
-                  isPrimary
-                  className="mt-2"
-                />
-              )}
+              ) : null}
             </div>
             <div className="mt-4 flex justify-end gap-4">
               <Button isButton isSecondary title="Cancel" />
@@ -342,21 +334,55 @@ export default function CreateNewArticle() {
 
       {showModal && (
         <Modal showModal={showModal}>
-          <p>Are you sure to publish this article?</p>
-          <div className="mt-4 flex justify-end gap-4">
-            <Button
-              isButton
-              isSecondary
-              title="Cancel"
-              onClick={handleCancelPublishArticle}
-            />
-            <Button
-              isButton
-              isPrimary
-              title="Sure"
-              onClick={() => handlePublishArticle()}
-            />
-          </div>
+          {isLoading && (
+            <div className="flex w-full justify-center">
+              <Spinner />
+            </div>
+          )}
+
+          {isUploaded && !isLoading && (
+            <div className="flex w-full flex-col items-center justify-center">
+              <HiCheckCircle className="text-5xl text-primary" />
+              <p className="mt-2 text-base">{success}</p>
+              <div className="mt-6 flex justify-end gap-4">
+                <Button
+                  title="Close"
+                  onClick={() => {
+                    handleCloseModal();
+                    // window.location.reload();
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === "Escape") {
+                      handleCloseModal();
+                      // window.location.reload();
+                    }
+                  }}
+                  isButton
+                  isPrimary
+                />
+              </div>
+            </div>
+          )}
+
+          {!isLoading && !isUploaded && (
+            <>
+              <p>Are you sure to publish this article?</p>
+              <div className="mt-4 flex justify-end gap-4">
+                <Button
+                  isButton
+                  isSecondary
+                  title="Cancel"
+                  onClick={handleCancelPublishArticle}
+                />
+                <Button
+                  isButton
+                  isPrimary
+                  title="Sure"
+                  onClick={() => handlePublishArticle()}
+                />
+              </div>
+            </>
+          )}
         </Modal>
       )}
     </div>

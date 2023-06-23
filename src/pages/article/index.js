@@ -33,6 +33,13 @@ export default function Article() {
     dispatch(getPopularBlogs());
     dispatch(getArticles({ id_cat: "", page: 1, sort: "DESC" }));
   }, []);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [id]);
   // console.log(articles);
 
   const article = articles && articles.find((article) => article.id === +id);

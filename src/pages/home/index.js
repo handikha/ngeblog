@@ -73,6 +73,10 @@ export default function Home() {
     dispatch(getPopularBlogs());
     dispatch(getArticles({ id_cat: "", page: 1, sort: "DESC" }));
     document.title = "Ngeblog.";
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, []);
 
   const handlePagination = (type) => {

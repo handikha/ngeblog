@@ -17,8 +17,8 @@ export const getArticles = createAsyncThunk(
 
       for (let i = 1; i <= data.page; i++) {
         let response2 = await api.get(`/blog?page=${i}`);
-        let output = response2.data.result;
-        response = response.concat(output);
+        let response2Result = response2.data.result;
+        response = response.concat(response2Result);
       }
 
       let myArticles = response.filter((article) => {
@@ -63,8 +63,8 @@ export const createNewArticle = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data } = await api.post("/blog", payload);
-      Toast.success("Success post an Article");
-      return data;
+      // Toast.success("Success post an Article");
+      return data.message;
     } catch (error) {
       console.error(error);
       Toast.error(error.response.data);
