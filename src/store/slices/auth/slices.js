@@ -47,6 +47,7 @@ export const logout = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       localStorage.removeItem("token");
+      localStorage.removeItem("id");
       return {};
     } catch (error) {
       // console.error(error);
@@ -63,6 +64,7 @@ export const register = createAsyncThunk(
 
       // save token
       localStorage.setItem("token", data?.token);
+      localStorage.setItem("id", data?.data?.id);
 
       return data?.data;
     } catch (error) {
