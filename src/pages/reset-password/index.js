@@ -210,7 +210,7 @@ export default function ResetPassword() {
                     isPrimary
                     isButton
                     type="button"
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate("/login")}
                     isLoading={loading}
                     isDisabled={isSubmitting || loading}
                   />

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaHeart, FaRegEye, FaRegHeart } from "react-icons/fa";
 import formatNumber from "../../utils/formatNumber";
 import Button from "../Button";
-import { HiOutlineTrash } from "react-icons/hi2";
+import { HiOutlineTrash, HiUserCircle } from "react-icons/hi2";
 import formatDate from "../../utils/formatDate";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +17,7 @@ function Card({
   onButtonLike,
   onButtonDelete,
   username,
+  writterImage,
 }) {
   const navigate = useNavigate();
   return (
@@ -52,8 +53,22 @@ function Card({
         </div>
 
         <div className="mt-6 flex items-center gap-x-2 text-sm  text-light-gray">
-          <span className="text-xs">
-            Written by{" "}
+          <span className="flex items-center gap-2 text-xs">
+            {/* Written by{" "} */}
+            <div className="h-8 w-8 overflow-hidden rounded-full ">
+              {writterImage ? (
+                <img
+                  src={process.env.REACT_APP_IMAGE_URL + writterImage}
+                  alt=""
+                  srcset=""
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="h-8 w-8 overflow-hidden rounded-full">
+                  <HiUserCircle className="text-3xl" />
+                </div>
+              )}
+            </div>
             <span className="cursor-pointer font-medium italic hover:text-primary">
               {author}
             </span>
@@ -112,6 +127,7 @@ export default function RenderCards({
       onButtonLike={() => onButtonLike(article.id)}
       onButtonDelete={() => onButtonDelete(article.id)}
       username={username}
+      writterImage={article.User.imgProfile}
     />
   ));
 }

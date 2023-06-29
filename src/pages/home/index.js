@@ -14,7 +14,7 @@ import Modal from "../../components/Modal";
 import RenderCards from "../../components/Card";
 import Carousel from "../../components/Carousel";
 import Pagination from "../../components/Pagination";
-import { HiArrowDown, HiArrowUp } from "react-icons/hi2";
+import { HiArrowLongDown, HiArrowLongUp } from "react-icons/hi2";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ export default function Home() {
     popularBlogs,
     id,
     isVerified,
+    // writterImgProfile,
   } = useSelector((state) => {
     return {
       isArticlesLoading: state.blogs.isArticlesLoading,
@@ -41,6 +42,7 @@ export default function Home() {
       popularBlogs: state.popularBlogs.data,
       id: state.auth.id,
       isVerified: state.auth.isVerified,
+      // writterImgProfile: state.blogs.writterImgProfile,
     };
   });
 
@@ -108,6 +110,18 @@ export default function Home() {
     );
   };
 
+  const handleAsc = (type) => {
+    setAsc((prevState) => !prevState);
+
+    dispatch(
+      getArticles({
+        id_cat: "",
+        page: 1,
+        sort: type,
+      })
+    );
+  };
+
   if (isArticlesLoading) return <HomeLoading />;
 
   return (
@@ -127,32 +141,49 @@ export default function Home() {
           </div>
         )}
         {params.category ? (
-          <h5 className="col-span-full font-medium text-dark">
-            <Button
-              type="link"
-              title="Home"
-              path="/"
-              className="hover:text-primary"
-            />{" "}
-            / {params.category}
-          </h5>
+          <div className=" bg-red-500">
+            <h5 className="font-medium text-dark">
+              <Button
+                type="link"
+                title="Home"
+                path="/"
+                className="hover:text-primary"
+              />{" "}
+              / {params.category}
+            </h5>
+          </div>
         ) : (
-          <h3 className=" col-span-full inline-block text-2xl font-semibold text-dark">
-            {categoryName ? (
-              <span className="text-lg">
-                <span
-                  className="cursor-pointer hover:text-primary"
-                  onClick={() => handleCategory("", "")}
-                >
-                  Home
-                </span>{" "}
-                / {categoryName}
-              </span>
-            ) : (
-              "Latest Post"
-            )}
-          </h3>
+          <div className="">
+            <h3 className="inline-block text-2xl font-semibold text-dark">
+              {categoryName ? (
+                <span className="text-lg">
+                  <span
+                    className="cursor-pointer hover:text-primary"
+                    onClick={() => handleCategory("", "")}
+                  >
+                    Home
+                  </span>{" "}
+                  / {categoryName}
+                </span>
+              ) : (
+                "Latest Post"
+              )}
+            </h3>
+          </div>
         )}
+        <div
+          className="flex cursor-pointer select-none items-center place-self-end hover:text-primary"
+          onClick={() => handleAsc(asc ? "DESC" : "ASC")}
+        >
+          <h5 className="inline font-medium">Sort: {asc ? "ASC" : "DESC"} </h5>
+          <span>
+            {asc ? (
+              <HiArrowLongUp className="inline" />
+            ) : (
+              <HiArrowLongDown className="inline" />
+            )}
+          </span>
+        </div>
 
         <RenderCards articles={articles} onButtonLike={onButtonLike} />
 
