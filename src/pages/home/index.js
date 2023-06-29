@@ -165,6 +165,8 @@ export default function Home() {
                   </span>{" "}
                   / {categoryName}
                 </span>
+              ) : asc ? (
+                "Oldest Post"
               ) : (
                 "Latest Post"
               )}
@@ -172,10 +174,12 @@ export default function Home() {
           </div>
         )}
         <div
-          className="flex cursor-pointer select-none items-center place-self-end hover:text-primary"
+          className="flex cursor-pointer select-none items-center place-self-end text-dark hover:text-primary"
           onClick={() => handleAsc(asc ? "DESC" : "ASC")}
         >
-          <h5 className="inline font-medium">Sort: {asc ? "ASC" : "DESC"} </h5>
+          <h5 className="inline font-medium">
+            Sort: {asc ? "Oldest Post" : "Latest Post"}{" "}
+          </h5>
           <span>
             {asc ? (
               <HiArrowLongUp className="inline" />
