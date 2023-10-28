@@ -13,19 +13,19 @@ export const getArticles = createAsyncThunk(
 
       const { data } = await api.get("/blog?" + encodeURI(PARAMETER));
 
-      let response = [];
+      // let response = [];
 
-      for (let i = 1; i <= data.page; i++) {
-        let response2 = await api.get(`/blog?page=${i}`);
-        let response2Result = response2.data.result;
-        response = response.concat(response2Result);
-      }
+      // for (let i = 1; i <= data.page; i++) {
+      //   let response2 = await api.get(`/blog?page=${i}`);
+      //   let response2Result = response2.data.result;
+      //   response = response.concat(response2Result);
+      // }
 
-      let myArticles = response.filter((article) => {
-        return article.UserId == id;
-      });
+      // let myArticles = response.filter((article) => {
+      //   return article.UserId == id;
+      // });
 
-      return { data, response, myArticles };
+      return { data };
     } catch (error) {
       // console.error(error);
       return rejectWithValue(error.response ? error.response.data : error);

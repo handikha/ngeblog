@@ -18,6 +18,8 @@ function Card({
   onButtonDelete,
   username,
   writterImage,
+  article,
+  setSelectedArticle,
 }) {
   const navigate = useNavigate();
   return (
@@ -33,9 +35,11 @@ function Card({
       <div className="flex h-48 flex-col justify-start bg-lightest p-4">
         <div className="">
           <a
-            onClick={() => navigate(`/article/${id}`)}
-            className="cursor-pointer text-xl font-semibold capitalize text-dark duration-150 hover:text-primary"
-          >
+            onClick={() => {
+              setSelectedArticle(article);
+              navigate(`/article/${id}`);
+            }}
+            className="cursor-pointer text-xl font-semibold capitalize text-dark duration-150 hover:text-primary">
             {title}
           </a>
 
@@ -83,16 +87,14 @@ function Card({
         <div className="flex w-full items-center justify-between gap-x-1">
           <span
             className="text-lg text-red-400 duration-100 hover:cursor-pointer active:scale-125"
-            onClick={onButtonLike}
-          >
+            onClick={onButtonLike}>
             <FaRegHeart />
           </span>
 
           {author === username && (
             <span
               onClick={onButtonDelete}
-              className="cursor-pointer select-none rounded-md bg-red-400 p-2 text-white hover:bg-red-500"
-            >
+              className="cursor-pointer select-none rounded-md bg-red-400 p-2 text-white hover:bg-red-500">
               <HiOutlineTrash />
             </span>
           )}
@@ -113,6 +115,7 @@ export default function RenderCards({
   onButtonLike = (id) => {},
   onButtonDelete = (id) => {},
   username,
+  setSelectedArticle,
 }) {
   return articles.map((article, index) => (
     <Card
@@ -128,6 +131,8 @@ export default function RenderCards({
       onButtonDelete={() => onButtonDelete(article.id)}
       username={username}
       writterImage={article.User.imgProfile}
+      article={article}
+      setSelectedArticle={setSelectedArticle}
     />
   ));
 }

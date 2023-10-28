@@ -27,6 +27,7 @@ import ForgotPassword from "./pages/forgot-password";
 import FormUploadImage from "./pages/upload-image";
 import PopularArticle from "./pages/popular-article";
 import CreateNewArticle from "./pages/create-new-article";
+import { useState } from "react";
 
 export default function App() {
   const location = useLocation();
@@ -43,13 +44,18 @@ export default function App() {
     location.pathname.includes("/reset-password") ||
     location.pathname === "/not-found";
 
+  const [selectedArticle, setSelectedArticle] = useState(null);
+
   return (
     <>
       {isNavbarVisible ? null : <Navbar />}
 
       <main className="bg-light">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={<Home setSelectedArticle={setSelectedArticle} />}
+          />
           <Route path="/about-us" element={<AboutUs />} />
           <Route
             path="/profile"
@@ -70,7 +76,10 @@ export default function App() {
           />
 
           <Route path="/category/:category" element={<Home />} />
-          <Route path="/article/:id" element={<Article />} />
+          <Route
+            path="/article/:id"
+            element={<Article selectedArticle={selectedArticle} />}
+          />
           <Route path="/popular-article/:id" element={<PopularArticle />} />
 
           <Route
